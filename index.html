@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.7">
   <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="bootstrap/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet">
+  <script src="bootstrap/jquery.min.js"></script>
   <script src="bootstrap/bootstrap.bundle.min.js"></script>
   <style>
     table {
@@ -54,10 +55,18 @@
         <table class="GridViewTable table table-striped table-bordered table-hover table-sm" cellspacing="0" cellpadding="4" align="Center" id="nutrition-table" style="border-collapse:collapse;">
         <tr class="HeaderStyle">
         <th align="left" scope="col">🥗 Храна</th>
-        <th class="text-center" scope="col">💪<label class="d-none d-sm-none d-md-inline"> Протеини</label></th>
-        <th class="text-center" scope="col">🔋<label class="d-none d-sm-none d-md-inline"> Мазнини</label></th>
-        <th class="text-center" scope="col">⚡<label class="d-none d-sm-none d-md-inline"> Въглехидрати</label></th>
-        <th class="text-center" scope="col">🔥<label class="d-none d-sm-none d-md-inline"> Калории</label></th>
+        <th class="text-center" scope="col" 
+            data-toggle="tooltip" data-placement="top" title="💪 Протеини"
+        >💪<label class="d-none d-sm-none d-md-inline"> Протеини</label></th>
+        <th class="text-center" scope="col" 
+            data-toggle="tooltip" data-placement="top" title="🔋 Мазнини"
+        >🔋<label class="d-none d-sm-none d-md-inline"> Мазнини</label></th>
+        <th class="text-center" scope="col" 
+            data-toggle="tooltip" data-placement="top" title="⚡ Въглехидрати"
+        >⚡<label class="d-none d-sm-none d-md-inline"> Въглехидрати</label></th>
+        <th class="text-center" scope="col" 
+            data-toggle="tooltip" data-placement="top" title="🔥 Калории"
+        >🔥<label class="d-none d-sm-none d-md-inline"> Калории</label></th>
         </tr><tr>
         <td colspan="5" align="center"><a href="#meat" name="meat"><b>🥩 Месо, месни продукти и яйца</b></a></td>
         </tr><tr>
@@ -531,7 +540,8 @@
         <td>Няма</td><td> </td><td> </td><td> </td><td> </td>
         </tr>
         </table>
-        
+        <div class="text-center text-muted"><small>Легенда<br> | 🥗 Храна | 💪 Протеини | 🔋 Мазнини | ⚡ Въглехидрати | 🔥 Калории |</small></div>
+        <br>
         <p class="text-center">Количеството Протеини, Мазнини, Въглехидрати и Калории е дефинирано за 100 грaма/милилитра продукт за всички изброени храни/напитки</p>
         
         <p class="categories text-center">
@@ -687,7 +697,7 @@ function updateURLParameter(url, param, paramVal)
     return baseURL + "?" + newAdditionalURL + rows_txt;
 }
 
-window.addEventListener('load', function () {
+window.addEventListener('load', function () {    
     var today = new Date();
     var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate();
     console.log(date);
@@ -729,5 +739,10 @@ function backToTop() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
 </script>
 </html>
