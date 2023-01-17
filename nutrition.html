@@ -35,7 +35,7 @@
           <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('search-table-input').value = '';document.getElementById('search-table-input').focus();search_table()">X</button>
         </div>
         <br>
-        <p class="text-center">
+        <p class="categories text-center">
         Категории <br>
         <a href="#meat">Месо, месни продукти и яйца</a><br>
         <a href="#fish">Риба и рибни продукти</a><br>
@@ -528,6 +528,20 @@
         </table>
         
         <p class="text-center">Количеството Протеини, Мазнини, Въглехидрати и Калории е дефинирано за 100 грaма/милилитра продукт за всички изброени храни/напитки</p>
+        
+        <p class="categories text-center">
+        Категории <br>
+        <a href="#meat">Месо, месни продукти и яйца</a><br>
+        <a href="#fish">Риба и рибни продукти</a><br>
+        <a href="#milk">Мляко и млечни продукти</a><br>
+        <a href="#bread">Хлебни изделия и зърнени храни</a><br>
+        <a href="#vegetables">Зеленчуци</a><br>
+        <a href="#fruits-and-nuts">Плодове и ядки</a><br>
+        <a href="#other">Други хранителни продукти</a><br>
+        <a href="#sugar">Захарни изделия</a><br>
+        <a href="#drinks">Безалкохолни Напитки</a><br>
+        <a href="#user">Добавени от потрбителят</a><br>
+        </p>
     </div>
 </div>
 <!-- Back to top button -->
@@ -549,6 +563,20 @@ function search_table()
   filter = input.value.toUpperCase();
   table = document.getElementById("nutrition-table");
   tr = table.getElementsByTagName("tr");
+  
+  if (filter === "") 
+  {
+    for (let element of document.getElementsByClassName("categories")){
+        element.style.display="";
+    }
+  }
+  else
+  {
+    for (let element of document.getElementsByClassName("categories")){
+        element.style.display="none";
+    }
+  }
+  
 
   var filter_array = filter.split(',');
   //console.log(filter_array);
