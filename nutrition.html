@@ -23,7 +23,7 @@
         
         <div class="input-group input-group-lg">
           <span class="input-group-text" id="inputGroup-sizing-lg">Търси</span>
-          <input type="text" id="search-table-input" onkeyup="search_table()" placeholder="Search for names.." class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+          <input type="text" id="search-table-input" onkeyup="search_table()" placeholder="Изброй с запетаи. картоф,банан..." class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
           <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('search-table-input').value = '';document.getElementById('search-table-input').focus();search_table()">X</button>
         </div>
         <br>
@@ -518,16 +518,39 @@ function search_table()
   table = document.getElementById("nutrition-table");
   tr = table.getElementsByTagName("tr");
 
+  var filter_array = filter.split(',');
+  //console.log(filter_array);
+  
   // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
+  for (i = 0; i < tr.length; i++) 
+  {
     td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+    if (td) 
+    {
+        txtValue = td.textContent || td.innerText;
+        txtValue = txtValue.toUpperCase();
+        
+        let match = false;
+        for (let i = 0; i < filter_array.length; i++) 
+        {
+            if(filter_array[i] != "")
+            {
+                if (txtValue.indexOf(filter_array[i]) > -1) 
+                {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        
+        if(match)
+        {
+            tr[i].style.display = "";
+        }
+        else
+        {
+            tr[i].style.display = "none";
+        }
     }
   }
 }
