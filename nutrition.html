@@ -533,7 +533,7 @@ function search_table()
         let match = false;
         for (let i = 0; i < filter_array.length; i++) 
         {
-            if(filter_array[i] != "")
+            if(filter_array[i] != "" || filter_array.length == 1)
             {
                 if (txtValue.indexOf(filter_array[i]) > -1) 
                 {
