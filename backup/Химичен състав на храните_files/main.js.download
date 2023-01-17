@@ -1,0 +1,557 @@
+/*
+ * Javascript Functions - Kak-da.com
+ *
+ * @author Valeri Terziev
+ * @copyright 2012 Web Fusion Ltd.
+ */
+
+
+// Set dir global variable
+var dir = get_hostname(window.location.href) == 'localhost' ? 'http://localhost/kak-da/' : '/';
+var loader = '<img src="'+dir+'images/ajax-loader.gif"/>';
+
+function ajax_login(url) {
+	var user = document.getElementById('login-user').value;
+	var pass = document.getElementById('login-pass').value;
+	var remember = document.getElementById('remember').value;
+	document.getElementById('logintxt').innerHTML = loader;
+
+	$.post(dir + "user.php", "action=login&user=" + user + "&pass=" + pass + "&remember=" + remember,
+		function( msg ) {
+			document.getElementById('logintxt').innerHTML = msg;
+			if (msg.indexOf('"success"') > 0) refresh = window.setTimeout("go('" + url + "')",2000);
+			else document.getElementById('logintxt').innerHTML = msg;
+	});
+}
+
+function ajax_send_password(email) {
+	document.getElementById('passtxt').innerHTML = loader;
+
+	$.ajax({
+		type: "POST",
+		url: dir + "user.php",
+		data: "action=password&email=" + email
+	}).done(function( msg ) {
+		document.getElementById('passtxt').innerHTML = msg;
+		//if (msg.indexOf('"success"') > 0) refresh = window.setTimeout('go(uri)',2000);
+	});
+}
+
+var page = 1;
+function ajax_list() {
+	$.get(window.location.href+ '/page' + page, 'ajax=1',
+		function( data ) {
+			var scroll = $('#list').offset().top + $('#list').height();
+			document.getElementById("list").innerHTML = document.getElementById("list").innerHTML + data;
+			if (data.indexOf('<!--hide-->') > 0) document.getElementById("listbut").style.display = 'none';
+            if (page > 2) $('body, html').animate({scrollTop: scroll}, 400);
+	});
+	page++;
+	return true;
+}
+
+function ajaxVote(mid,pollId) {
+	if ($('input[@name=poll-'+pollId+']:checked').length == 0) alert('Изберете опция');
+	else {
+		$.post(dir , "action=vote&poll_id=" + pollId + "&option=" + $('input[@name=poll-'+pollId+']:checked').val(),
+		function (msg) {
+			$('#poll-'+pollId).html(msg);
+		});
+	}
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Ajax Search - get uri from input field
+ *
+ * @param  {Object} oEvent Event object
+ * @return {Boolean}
+ * ---------------------------------------------------------------------------
+ */
+function ajax_search(oEvent) {
+    oEvent = oEvent || window.event;
+	var keyCode = oEvent.keyCode;
+	if (keyCode == 40 || keyCode == 38) return false;
+    var txtField = oEvent.target || oEvent.srcElement;
+    if (txtField.value.length < 3) return false;
+
+	$.get(dir,  "uri=/" + document.getElementById('uri').value + 'sch' + encodeURIComponent(txtField.value),
+		function( msg ) {
+			if (msg == '') msg = 'Няма открити резултати.';
+			document.getElementById("ajax-result").innerHTML = msg;
+			document.getElementById("ajax-result").style.display = 'block';
+	});
+	return true;
+}
+// Close Ajax Results div
+document.onclick = function (oEvent) {
+	if (document.getElementById("ajax-search")) {
+		if (document.getElementById("ajax-search").setAttribute) document.getElementById("ajax-search").setAttribute('autocomplete','off');
+		oEvent = oEvent || window.event;
+		var o = oEvent.target || oEvent.srcElement;
+		if (o.id != 'ajax-result' && o.id != 'ajax-search' && o.parentNode.id != 'ajax-result') document.getElementById("ajax-result").style.display = 'none';
+	}
+}
+// Keyboard navigation for ajax-results
+var focus = 0;
+document.onkeydown = function (oEvent) {
+	oEvent = oEvent || window.event;
+	var keyCode = oEvent.keyCode;
+	if (document.getElementById("ajax-result") != null) {
+		if (keyCode == 13 && focus > 0) {
+			go(document.getElementById('s-' + focus).href);
+			return false;}
+		if (keyCode == 40 && document.getElementById('s-' + (focus+1) )) {
+			if (focus > 0) document.getElementById('s-' + focus).className = '';
+			focus++;
+			document.getElementById('s-' + focus).className = 'sel';}
+		if (keyCode == 38 && focus > 1) {
+			document.getElementById('s-' + focus).className = '';
+			focus--;
+			document.getElementById('s-' + focus).className = 'sel';}
+	}
+}
+
+
+function ajax_like(id,type,like) {
+	$.post(dir, "action=like&id=" + id + "&type=" + type + "&like=" + like,
+		function( msg ) {
+			if (like === 0) $('.dislike').addClass('clicked');
+			else $('.like').addClass('clicked');
+			document.getElementById("like-stats").innerHTML = msg;
+			document.getElementById("like-stats").style.display = 'block';
+			$('#like-stats').delay(1500).animate({
+				opacity: 0
+			}, 500, function() {
+				$("#like-stats").hide();
+			});
+
+		});
+}
+
+function ajax_like_stats(id,type) {
+	$.post(dir, "action=like-stats&id=" + id + "&type=" + type,
+		function( msg ) {
+			document.getElementById("like-stats").innerHTML = msg;
+			document.getElementById("like-stats").style.display = 'block';
+	});
+}
+
+function validate_register(oEvent) {
+	oEvent = oEvent || window.event;
+    var txtField = oEvent.target || oEvent.srcElement;
+
+	if (txtField.id == 'email') {
+		if (validate_email(document.getElementById('email').value) == false) {
+			document.getElementById('imgmail').style.display = 'inline-block';
+			document.getElementById('txtmail').innerHTML = 'Невалиден E-mail';
+		}
+		else {
+			$.post(dir + "user.php", "action=email-exists&email=" + document.getElementById('email').value,
+				function (msg) {
+					if (msg == 1) {
+						document.getElementById('imgmail').style.display = 'inline-block';
+						document.getElementById('txtmail').innerHTML = 'Този E-mail е регистриран.';}
+					else {
+						document.getElementById('imgmail').style.display = 'none';
+						document.getElementById('txtmail').innerHTML = '';}
+				}
+			);
+		}
+	}
+	else if (txtField.name == 'conf' || txtField.name == 'pass') {
+		var conf = document.getElementById("conf");
+		if (conf.value != document.getElementById("pass").value) {
+			document.getElementById("imgconf").style.display = "";
+			document.getElementById("txtconf").innerHTML = "Парола и Потвърди не съвпадат.";
+			conf.valid = false;}
+		else {
+			document.getElementById("imgconf").style.display = "none";
+			document.getElementById("txtconf").innerHTML = "";
+			conf.valid = true;}
+	}
+	return false;
+}
+
+function submit_register() {
+	if (!document.getElementById('terms').checked) {
+		alert('Трябва да сте съгласни с общите условия');
+	}
+	else if (document.getElementById("txtconf").innerHTML != '' || document.getElementById('txtmail').innerHTML != '' ) {return false;}
+	else return true;
+	return false;
+}
+
+function validate_email(email) {
+	return /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i.test(email);
+}
+
+function go(url) {
+	var ie = document.all;
+
+	if (url.indexOf('http://') == -1) url = dir + url;
+
+	if (ie) {
+		var referLink = document.createElement('a');
+		referLink.href = url;
+		document.body.appendChild(referLink);
+		referLink.click();
+	}
+	else {
+		parent.location = url;
+	}
+	return false;
+}
+
+window.onload = function() {
+	if (document.getElementById('ajax-search')) document.getElementById('ajax-search').onkeyup = ajax_search;
+	if (document.getElementById('contact-email')) {
+		document.getElementById('contact-email').href = 'mail' + 'to:' + 'office' + '@' + 'baubau.bg';
+		document.getElementById('contact-email').innerHTML = '<img src="' + dir + 'images/email.png" alt="E-mail"/> office' + '@' + 'baubau.bg';
+	}
+
+	$('body').on('click','.pop-banner', function() {
+		var close = $(this).css('bottom') != '0px';
+		$(this).animate( {bottom: (close ? 0 : -250) }, 300, function() {
+			$(this).find('.arrow').html(close ? '&dtrif;' : '&utrif;');
+		});
+	});
+
+	if ($('.pop-banner:not(.first-time)').length) var bt = setTimeout( function () {
+			$('.pop-banner').click();
+			var bt2 = setTimeout( function () {
+				if ($(this).css('bottom') != '0px')
+					$('.pop-banner').click();
+			}, 6000);
+		}, 3000);
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Drag and Drop elements having style "drag"
+ * ---------------------------------------------------------------------------
+ */
+var ie = document.all;
+var nn6 = document.getElementById&&!document.all;
+var isdrag = false;
+var x,y;
+var dobj;
+// Move dragable element
+function movemouse(e) {
+	if (isdrag) {
+		dobj.style.left = nn6 ? tx + e.clientX - x + 'px' : tx + event.clientX - x;
+		dobj.style.top  = nn6 ? ty + e.clientY - y + 'px' : ty + event.clientY - y;
+		return false;
+	}
+	return true;
+}
+// Start drag on click
+function selectmouse(e) {
+	var fobj = nn6 ? e.target : event.srcElement;
+	if (fobj.tagName == 'HTML') return false;
+
+
+	while (fobj.parentNode.className != undefined && fobj.parentNode.className.search("drag")!=-1 ||
+			fobj.parentNode.parentNode.className != undefined && fobj.parentNode.parentNode.className.search("drag")!=-1 )  {
+		fobj = nn6 ? fobj.parentNode : fobj.parentElement;
+	}
+	if (fobj.className.search("drag")!=-1) {
+		isdrag = true;
+		dobj = fobj;
+		tx = parseInt(dobj.offsetLeft + 0);
+		ty = parseInt(dobj.offsetTop + 0);
+		x = nn6 ? e.clientX : event.clientX;
+		y = nn6 ? e.clientY : event.clientY;
+		document.onmousemove = movemouse;
+		return false;
+	}
+	return true;
+}
+// Save position of dragable element
+function save_position(e) {
+	isdrag=false;
+	var fobj = nn6 ? e.target : event.srcElement;
+	if (!fobj) fobj = e;
+	if (fobj.tagName == 'HTML') return false;
+
+	while (fobj.parentNode.className != undefined && fobj.parentNode.className.search("drag")!=-1 ||
+			fobj.parentNode.parentNode.className != undefined && fobj.parentNode.parentNode.className.search("drag")!=-1 )  {
+		fobj = nn6 ? fobj.parentNode : fobj.parentElement;
+	}
+	if (fobj.className.search("drag")!=-1) {
+		var x = parseInt(fobj.offsetLeft + 0);
+		var y = parseInt(fobj.offsetTop + 0);
+		var open = fobj.style.height == "auto" ? 1 : 0;
+		var arr = fobj.id.split('-');
+		var id = arr[1];
+		var oXmlHttp = zXmlHttp.createRequest();
+		oXmlHttp.open("get", dir+"soccer-scores-ajax.php?save-pos=" + id + '&x=' + x + '&y=' + y + '&open=' + open, true);
+		if (oXmlHttp.readyState == 4 && oXmlHttp.status == 200) {
+				alert(oXmlHttp.responseText);
+		}
+		oXmlHttp.send(null);
+	}
+	return true;
+}
+//document.onmousedown = selectmouse;
+//document.onmouseup = save_position;
+
+
+/* ===========================================================================
+ *
+ * STUFF FUNCTIONS
+ *
+ * ===========================================================================
+ */
+
+/* ---------------------------------------------------------------------------
+ * Display Popup window
+ *
+ * @url  {String} url The ajax URL
+ * @return {String} Hostname
+ * ---------------------------------------------------------------------------
+ */
+function popup(url) {
+	if (!document.getElementById('popup-back')) {
+		var back = document.createElement("div");
+		back.id = 'popup-back';
+		document.body.appendChild(back);
+	}
+	else back = document.getElementById('popup-back');
+	document.getElementById('popup-back').style.height = $(document).height() + 'px';
+	document.getElementById('popup-back').style.display = 'block';
+
+	if (!document.getElementById('popup')) {
+		var obj = document.createElement("div");
+		obj.id = 'popup';
+		document.body.appendChild(obj);
+	}
+	else obj = document.getElementById('popup');
+
+	//obj.style.top = pos[1] + 20 + "px";
+	//obj.style.left = pos[0] + 35 + "px";
+	$.get(dir + url, 'ajax=1',
+		function( msg ) {
+			obj.innerHTML = '<div class="close"><a id="popup-close"><img src="' + dir + 'images/delete.png" alt="затвори" /></a></div>'
+				+ msg;
+			document.getElementById('popup').style.top  = ($(window).height()/2 - $('#popup').height()/2) + 'px';
+			document.getElementById('popup').style.left = ($(window).width() /2 - $('#popup').width()/2) + 'px';
+			document.getElementById('popup').style.display = 'block';
+			document.getElementById('popup-close').onclick = function() {
+				document.getElementById('popup-back').style.display = 'none';
+				//document.getElementById('popup').style.display = 'none';
+				document.body.removeChild(obj);
+			}
+	});
+
+	document.getElementById('popup-back').onclick = function() {
+		document.getElementById('popup-back').style.display = 'none';
+		//document.getElementById('popup').style.display = 'none';
+		document.body.removeChild(obj);
+	}
+
+}
+
+/* ---------------------------------------------------------------------------
+ * Get hostname from URL
+ *
+ * @param  {String} url The URL
+ * @return {String} Hostname
+ * ---------------------------------------------------------------------------
+ */
+function get_hostname(url) {
+	var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
+	return url.match(re)[1].toString();
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Change scores arrow class
+ *
+ * @param {String} group The name of tabs group
+ * @param {Number} hover Id of clicked tab
+ * ---------------------------------------------------------------------------
+ */
+function arrow_hover(group,hover) {
+	var obj = document.getElementById('scores-'+group+'-arrow');
+
+	if (hover) obj.className = obj.className+'-hover';
+	else obj.className = obj.className.replace('-hover','');
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Switch between tabs in one group
+ *
+ * @param {String} group The name of tabs group
+ * @param {Number} id    Id of clicked tab
+ * ---------------------------------------------------------------------------
+ */
+function tab(group,id) {
+	for (i=1; i<20; i++) {
+		if (document.getElementById(group+'-'+i) && document.getElementById(group+'-'+i).style.display != 'none') {
+			document.getElementById(group+'-'+i).style.display = 'none';
+			if (document.getElementById(group+'-tab-'+i)!=null) document.getElementById(group+'-tab-'+i).className = 'tab-off';
+		}
+	}
+	if (document.getElementById(group+'-'+id)) {
+		document.getElementById(group+'-'+id).style.display = 'block';
+		if (document.getElementById(group+'-tab-'+id)!=null) document.getElementById(group+'-tab-'+id).className = 'tab-on';
+	}
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Display/Hide block of elements
+ *
+ * @param {String} id Id of group of elements
+ * ---------------------------------------------------------------------------
+ */
+over = 0;
+function show(id) {
+	if (over == 0) {
+		var display = '';
+		for (i=1; i<200; i++) {
+			if (document.getElementById(id+i)) {
+				if (display == '') {
+					if (document.getElementById(id+i).style.display == 'none') {
+						display = 'table-row';
+						arrow = 'arrow-open';
+					}
+					else {
+						display = 'none';
+						arrow = 'arrow-close';
+					}
+					document.getElementById(id+'arrow').className = arrow;
+				}
+				document.getElementById(id+i).style.display = display;
+			}
+			else break;
+		}
+	}
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Get object position
+ *
+ * @param  {Object}  obj    Object to get position
+ * @param  {Boolean} scroll If true get also scroll offsets
+ * @return {Array}   X, Y coordinates
+ * ---------------------------------------------------------------------------
+ */
+function get_obj_pos(obj,scroll) {
+	var x = 0;
+	var y = 0;
+
+	var obj2 = obj;
+	while (obj.offsetParent) {
+		x += obj.offsetLeft
+		y += obj.offsetTop
+		obj = obj.offsetParent;
+	}
+	if (scroll != null) {
+		while (obj2.parentNode) {
+			y -= obj2.scrollTop;
+			obj2 = obj2.parentNode;
+		}
+	}
+	return [ x, y ];
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Get window dimensions
+ *
+ * @return {Array} Width, Height values
+ * ---------------------------------------------------------------------------
+ */
+function get_win_dimensions(scroll) {
+	var w, h = 0;
+	if (window.innerWidth) {
+		w = window.innerWidth;
+	}
+	else if (document.documentElement && document.documentElement.clientWidth) {
+		w = document.documentElement.clientWidth;
+	}
+	else if (document.body) {
+		w = document.body.clientWidth;
+	}
+	if (window.innerHeight) {
+		h = window.innerHeight;
+	}
+	else if (document.documentElement && document.documentElement.clientHeight) {
+		h = document.documentElement.clientHeight;
+	}
+	else if (document.body) {
+		h = document.body.clientHeight;
+	}
+	if (scroll) {
+		h += window.pageYOffset ? window.pageYOffset : document.documentElement.scrollTop;
+	}
+	return [ w, h ];
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Display Tooltip
+ *
+ * @param {Object}  oo     Object that calls function
+ * @param {String}  text   Text for tooltip
+ * @param {Boolean} scroll If true gef scroll offset position
+ * ---------------------------------------------------------------------------
+ */
+function tooltip(oo, text, scroll) {
+	var pos = get_obj_pos(oo, scroll);
+	var obj = document.createElement("div");
+	obj.className = "tooltip";
+	obj.id = 'tooltip';
+	obj.style.top = pos[1] + 20 + "px";
+	obj.style.left = pos[0] + 35 + "px";
+	obj.innerHTML = text;
+	obj.style.display = 'block';
+	document.body.appendChild(obj);
+	oo.onmouseout = function() {document.body.removeChild(obj);}
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Add Leading zeros
+ *
+ * @param {Number} number The number
+ * @param {Number} length The wanted number of digit
+ * ---------------------------------------------------------------------------
+ */
+function pad(number, length) {
+    var str = '' + number;
+    while (str.length < length) {
+        str = '0' + str;
+    }
+    return str;
+}
+
+function publish_terms() {
+	//var dim = get_win_dimensions(); alert(Math.round((dim[0] - document.getElementById('publish-terms').innerWidth)/2));
+	//document.getElementById('publish-terms').style.top = Math.round((dim[1] - document.getElementById('publish-terms').innerHeight)/2) + 'px';
+	//document.getElementById('publish-terms').style.left = Math.round((dim[0] - document.getElementById('publish-terms').innerWidth)/2) + 'px';
+	document.getElementById('publish-terms').style.display = 'block';
+
+}
+
+function removeArrayElement(arrayName,arrayElement) {
+	for(var i=0; i<arrayName.length;i++ ) {
+		if(arrayName[i]==arrayElement)
+			arrayName.splice(i,1);
+	}
+}
+
+
+function bookmark(url,title){
+  if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) {
+  window.external.AddFavorite(url,title);
+  } else if (navigator.appName == "Netscape") {
+    window.sidebar.addPanel(title,url,"");
+  } else {
+    alert("Press CTRL-D (Netscape) or CTRL-T (Opera) to bookmark");
+  }
+}

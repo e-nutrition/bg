@@ -1,0 +1,338 @@
+/*
+Theme Name: For Life
+Description: Child theme
+Author: ForLife
+Author URI: https://forlife.bg
+Template: Avada
+Version: 1.0.0
+Text Domain:  Avada
+*/
+
+/* Keto pilar remove parts of book page_id preview */
+.postid-133346 .woocommerce-tabs {
+    display: none !important;
+    }
+    .postid-133346 .product_meta {
+    display: none !important;
+    }
+    .postid-133346 .social-share {
+    display: none !important;
+    }
+    .postid-133346 .related {
+    display: none !important;
+    }
+    /* Carbohydrates pilar remove parts of book page_id preview */
+    .postid-168394 .woocommerce-tabs {
+    display: none !important;
+    }
+    .postid-168394 .product_meta {
+    display: none !important;
+    }
+    .postid-168394 .social-share {
+    display: none !important;
+    }
+    .postid-168394 .related {
+    display: none !important;
+    }
+    /* Quote element in publications */
+    blockquote {
+    background-color: #7b9d96 !important;
+    } 
+    blockquote > p {
+    color: #ffffff !important;
+    }
+    
+    
+    .checkout .payment_methods .payment_box {
+        clear: both;
+        padding: 5px;
+        margin-top: 0px;
+        font-style: italic;
+        padding-bottom: 0px;
+    }
+    .payment_methods li img {
+        float: right;
+        width: 70px;
+    }
+    
+    .checkout .payment_methods li {
+        margin-bottom: 15px;
+    }
+    
+    @media all and (max-width: 980px) {
+    .fusion-custom-menu-item.fusion-menu-cart.fusion-secondary-menu-cart {
+        display:none;
+    } 
+    }
+    
+    
+    /* Make the buy button wider */
+    .single_add_to_cart_button.button.alt {
+        width: 40%;
+    }
+    @media (max-width: 980px) {
+    .single_add_to_cart_button.button.alt {
+        width: 60%;
+    }
+    }
+    
+    /*fade cart buttons*/
+    .fusion-apply-coupon.fusion-button.button-default.fusion-button-default-size.button {
+        background-color: #aec0be;
+    }
+    .fusion-button.button-default.fusion-button-default-size.button.fusion-update-cart {
+        background-color: #aec0be;
+    }
+    
+    /* shop page buy button */
+    .button.product_type_simple.add_to_cart_button.ajax_add_to_cart {
+        color: white;
+        background-color: #5d8278;
+        padding: 2px;
+        text-align: right;
+        padding-left: 25px;
+        padding-right: 15px;
+    }
+    
+    /* shop page options button */
+    .button.product_type_variable.add_to_cart_button {
+        color: white;
+        background-color: #5d8278;
+        padding: 2px;
+        text-align: right;
+        padding-left: 22px;
+        padding-right: 11px;
+    }
+    
+    
+    
+    /* Hide the sidebar for small devices. Tweak max-width as needed. */
+    @media only screen and (max-width: 767px) {
+        #sidebar {
+          display: none;
+        }
+        .fusion-secondary-menu>ul>li>a {
+          padding: 0 5px;
+      }
+      .fusion-secondary-header .fusion-alignright{
+          display: none;
+      }
+      
+    
+      }
+      
+     .fusion-archive-description {
+        position: relative;
+        overflow: hidden;
+        margin: 30px 0;
+        padding: 20px 20px 4em 20px;
+    }
+    
+    .term-description {
+        position: relative;
+        overflow: hidden;
+        margin: 0px 0;
+        padding: 0px 0px 0px 0px;
+    }
+    
+     .more-link {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #7C9D96;
+      color: #FFFFFF;
+      text-align: center;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 30px #fff;
+    }
+    
+    
+    .more-link:hover {
+      background: #879E98;
+      color:#FFFFFF;
+    }
+    
+    .more-link:after {
+        content: "\2193";
+        margin-left: 8px;
+        font-size: .8em;
+    }
+    
+    .more-link.open:after {
+        content: "\2191";
+    }
+    
+    a.avada-button-select[data-checked="true"] {
+        background: #7C9D96;
+        color: #FFFFFF;
+    }
+    .bottom-cart {
+      position:fixed;
+      bottom:0px;
+      width:100%;
+    }
+    #woo_sticky_simple_cart p.stock.in-stock {
+        display: none !important;
+    }
+    input.plus {
+        height: 40px;
+        width: 40px;
+        font-size: 13px;
+        border-color: #eaeaea;
+    }
+    input.minus {
+        height: 40px;
+        width: 40px;
+        font-size: 13px;
+        border-color: #eaeaea;
+    }
+    .sticky-buy-now-product-name{
+        color:#000 !important;
+        font-size: 14px;
+    }
+    #sticky-buy-now-dock {
+        color: #7C9D96;
+        font-size: 14px;
+    }
+    
+    #sticky-buy-now-dock a, #sticky-buy-now-dock .single_add_to_cart_button.button, #sticky-buy-now-dock-pages a {
+        width: 48%;
+    }
+    #sticky-buy-now-dock form.cart {
+        margin:0px !important;
+    }
+    #woo_sticky_variation_cart tbody tr {
+        width: 100% !important;
+    }
+    #woo_sticky_variation_cart td.label {
+        display: none;
+    }
+    #sticky-buy-now-dock .woocommerce-variation-price {
+        display: none;
+    }
+    
+    
+    #sticky-buy-now-dock .woocommerce-variation-availability {
+        display: none;
+    }
+    
+    #sticky-buy-now-dock .woocommerce-Price-amount.amount {
+        color: #7C9D90;
+    }
+    
+    #sticky-buy-now-dock a.added_to_cart.wc-forward {
+        display: none !important;
+    }
+    
+    /*Edit the 3.5 number according to your website for desktop*/
+    #tidio-chat-iframe { bottom: 5em !important; } 
+    @media only screen and (max-width: 980px) {
+     /*Edit the 0px number according to your website for mobile*/
+        #tidio-chat-iframe { bottom: 100px !important; }
+    }
+    
+    button.single_add_to_cart_button.button.alt {
+        color: #fff !important;
+    }
+    
+    
+    @media only screen and (min-width: 980px) {
+        
+        #sticky-buy-now-dock {
+            display:none !important;
+        }
+        
+    }
+    
+    
+    .fusion-apply-coupon.fusion-button.button-default.fusion-button-default-size.button {
+        background-color: #7C9D96;
+    }
+    
+    
+    .fusion-secondary-menu .fusion-custom-menu-item-contents {
+        width: 350px;
+    }
+    
+    .fusion-custom-menu-item-contents.fusion-menu-cart-items {
+        width: 350px;
+    }
+    
+    .fusion-main-menu .fusion-widget-cart-counter>a .fusion-widget-cart-number {
+        color: #FFFFFF;
+    }
+    .fusion-woocommerce-quick-view-container .product .fusion-wqv-content-inner {
+     height:80vh;
+    }
+    .fusion-woocommerce-quick-view-container.quick-view.woocommerce.complete.fusion-quick-view-loaded {
+        height: 80vh !important;
+    }
+    .fusion-woo-checkout-order-review-tb ul li input:checked+label:after, .fusion-woo-checkout-payment-tb ul li input:checked+label:after {
+        content: "";
+        left: 32px;
+        width: 9px;
+        height: 9px;
+        border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #7C9D96;
+    }
+    .payment_methods li img {
+        float: right;
+        width: 70px;
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    .fusion-woo-checkout-payment-tb .woocommerce-checkout-payment ul.wc_payment_methods li label img {
+        max-height: 40px !important;
+    }
+    .avada-availability {
+        display: none !important;
+    }
+    
+    #sticky-buy-now-dock .forlife-availability {
+        display: none !important;
+    }
+    /* End of */
+    
+    .fusion-content-boxes .content-container {
+        font-family: 'Open Sans';
+    }
+    
+    .wc-product-table-multi-form input[type=submit] {
+        background: #7C9D96 !important;
+        color: #fff !important;
+        border: none !important;
+    }
+    
+    .fusion-woo-checkout-payment-tb-1 .woocommerce-checkout-payment ul.wc_payment_methods li .payment_box, .fusion-woo-checkout-payment-tb-1 .woocommerce-checkout-payment ul.wc_payment_methods li.woocommerce-notice {
+        padding-right: 30px !important;
+    }
+    
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none !important;
+    }
+    table.dataTable.no-footer {
+        border-bottom: none !important;
+    }
+    .wc-product-table td, .wc-product-table th {
+        vertical-align: middle !important;
+    }
+    img.product-thumbnail.product-table-image.lazyautosizes.lazyloaded {
+        border-radius: 10px;
+    }
+    tr.odd {
+        background: #EDF3F5 !important;
+    }
+    
+    .woocommerce .woocommerce-info, .woocommerce .woocommerce-message {
+        display: none !important;
+    }
+
+

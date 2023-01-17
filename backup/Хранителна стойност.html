@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://dimafitness.com/nutritions -->
+<html lang="en" prefix="og: http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+            <meta name="title" content="Фитнес тренировки и хранителни режими - DimaFitness.com">
+        <meta name="keywords" content="фитнес тренировки, персонални тренировки, фитнес инструктури, бодибилдинг">
+        <meta name="description" content="Фитнес тренировки и хранителни режими - DimaFitness.com">
+        <meta name="facebook-domain-verification" content="i8ipuefanwytip0l6lwo16yg3gircy">
+    
+    <title>Хранителна стойност</title>
+            <link rel="shortcut icon" type="image/x-icon" href="https://dimafitness.com/assets/css/images/favicon.ico">
+
+        <!-- Vendor Styles -->
+        <link rel="stylesheet" href="./Хранителна стойност_files/bootstrap.css">
+        <link rel="stylesheet" href="./Хранителна стойност_files/all.min.css">
+        <link rel="stylesheet" href="./Хранителна стойност_files/slick.css">
+        <link rel="stylesheet" href="./Хранителна стойност_files/slick-theme.css">
+        <link rel="stylesheet" href="./Хранителна стойност_files/jquery.fancybox.min.css">
+
+        <!-- App Styles -->
+        <link rel="stylesheet" href="./Хранителна стойност_files/style.css">
+                <meta property="fb:app_id" content="961350977559358">
+        <meta property="og:url" content="https://dimafitness.com">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Фитнес тренировки и хранителни режими - DimaFitness.com">
+        <meta property="og:description" content="Фитнес тренировки, хранителни и тренировъчни режими, добавки, аксесоари">
+        <meta property="og:image" content="https://dimafitness.com//images/og_image.png">
+    
+            <!-- Vendor JS -->
+        <script src="./Хранителна стойност_files/245973070655045" async=""></script><script async="" src="./Хранителна стойност_files/fbevents.js.download"></script><script src="./Хранителна стойност_files/jquery-3.4.1.min.js.download"></script>
+        <script src="./Хранителна стойност_files/bootstrap.bundle.min.js.download"></script>
+        <script src="./Хранителна стойност_files/slick.js.download"></script>
+        <script src="./Хранителна стойност_files/jquery.fancybox.min.js.download"></script>
+
+        <!-- App JS -->
+        <script src="./Хранителна стойност_files/functions.js.download"></script>
+        <script>
+            $(document).ready(function(e){
+                $('.go-back-btn').on('click', function (event) {
+                    event.preventDefault();
+                    setTimeout(function () {
+                        window.history.go(-1);
+                    });
+                });
+
+                //login functionality
+                var $loginBtn = $('#popup_login_submit');
+                $loginBtn.on('click', function (event) {
+                    event.preventDefault();
+                    var $form = $('#login-form'),
+                        targetUrl = $form.attr('action'),
+                        type = $form.attr('method'),
+                        loginBtnValue = $loginBtn.val();
+                    $('#login-error-message').remove();
+                    $.ajax({
+                        type: type,
+                        url: targetUrl,
+                        data: $form.serialize()
+                    })
+                        .done(function (data, status, object) {
+                            var responseObj = $.parseJSON(object.responseText);
+                            if (responseObj.success === false) {
+
+                                $form.prepend('<div class="alert alert-danger" id="login-error-message"><p>' + responseObj.message + '</p></div>');
+                            } else {
+                                location.reload();
+                            }
+                        })
+                        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("System Error" + textStatus);
+                            alert("Error: " + errorThrown);
+                        })
+                        .always(function () {
+
+                        });
+                });
+            });
+        </script>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '245973070655045');
+            fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=245973070655045&ev=PageView&noscript=1"/></noscript>
+        <!-- End Facebook Pixel Code -->
+    </head>
+<body>
+
+
+
+<div class="modal modal-login fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <div id="login-wrapper" class="modal-body">
+                <div class="mt-1 mb-4 text-center">
+                    <img src="./Хранителна стойност_files/fitness.png" height="53" width="67" alt="">
+                </div><!-- /.text-center -->
+
+                <form action="https://dimafitness.com/en/login_check" method="post" id="login-form">
+                    <input type="hidden" name="_csrf_token" value="2s7HyFcJuP0cYRnKGNGqx-txHVTk54nvE4dWTbf-0u8">
+                    <div class="form-group form-group-border-bottom bg-light">
+                        <label for="_username">Потребителско име или парола:</label>
+
+                        <input type="text" class="form-control bg-transparent" name="_username" id="login_username" value="" placeholder="">
+                    </div>
+
+                    <div class="form-group form-group-border-bottom bg-light">
+                        <label for="login-password">Парола:</label>
+
+                        <input type="password" class="form-control bg-transparent" name="_password" id="login_password" value="" placeholder="">
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="https://dimafitness.com/en/resetting/request">Забравена парола</a>
+
+                        <a href="https://dimafitness.com/en/register/">Регистрация</a>
+                    </div><!-- /.d-flex -->
+
+                    <div class="text-center mt-5 mb-4">
+                        <input type="submit" value="Вход" id="popup_login_submit" class="btn btn-teal btn-lg rounded-pill form-btn">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <header class="header">
+    <div class="container">
+        <a href="https://dimafitness.com/en" class="logo">
+            <img src="./Хранителна стойност_files/logo.png" height="50" width="275" alt="">
+        </a>
+
+        <div class="break"></div><!-- /.break -->
+
+        <nav class="header-socials">
+            <ul>
+                <li>
+                    <a href="https://https//www.facebook.com/wwwdimafitnesscom/?ref=pages_you_manage" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="tel:00359879452622" class="phone">
+                        <i class="fas fa-phone-volume"></i><span class="text-white">+359879452622</span>
+                    </a>
+                </li>
+            </ul>
+        </nav><!-- /.socials -->
+
+        <nav class="nav-utilities">
+            <ul>
+                <li id="shopping-cart-holder">
+                    <a href="https://dimafitness.com/shopping-cart">
+                        <i class="fal fa-shopping-cart">
+                                                    </i>
+                    </a>
+                </li>
+
+                <li>
+                    <div class="dropdown dropdown-user">
+                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fal fa-user"></i></button>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#loginModal">Вход</button>
+                                <a class="dropdown-item" href="https://dimafitness.com/en/register/">Регистрация</a>
+                                                    </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="dropdown dropdown-lang">
+                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">En <i class="fal fa-chevron-down"></i></button>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                                                                <a href="https://dimafitness.com/hranitelen-sustav" class="dropdown-item js-lang-choice" data-lang="bg">
+                                        Bg</a>
+                                
+                                                            
+                                                                                                <a href="https://dimafitness.com/hranitelen-sustav" class="dropdown-item js-lang-choice" data-lang="ru">
+                                        Ru</a>
+                                
+                                                    </div>
+                    </div>
+                </li>
+            </ul>
+        </nav><!-- /.nav-utilities -->
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fal fa-fw fa-bars"></i>
+        </button>
+    </div><!-- /.container -->
+</header><!-- /.header -->        <nav class="navbar navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://dimafitness.com/nutritions#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Магазин</a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                                        <a class="dropdown-item" href="https://dimafitness.com/shop/category/sportni-1">Спортни</a>
+                                                                                                <a class="dropdown-item" href="https://dimafitness.com/shop/category/dobavki-1">Добавки</a>
+                                                                                                <a class="dropdown-item" href="https://dimafitness.com/shop/category/bilki-1">Билки</a>
+                                                                                                <a class="dropdown-item" href="https://dimafitness.com/shop/category/sstezatelni-banski-obuvki-i-aksesoari-1">Състезателни бански, обувки и аксесоари</a>
+                                                                                                <a class="dropdown-item" href="https://dimafitness.com/shop/category/promotsii">Промоции</a>
+                                                                                                <a class="dropdown-item" href="https://dimafitness.com/shop/category/literatura">Литература</a>
+                                                            </div>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="https://dimafitness.com/promotions">Промоции</a>
+            </li>
+            
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://dimafitness.com/nutritions#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Полезно &amp; безплатно</a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="https://dimafitness.com/calorie-calculator">Калориен калкулатор</a>
+
+                    <a class="dropdown-item" href="https://dimafitness.com/body-mass-index">Изчисляване на телесна маса</a>
+
+                    <a class="dropdown-item" href="https://dimafitness.com/library">Библиотека</a>
+
+                    <a class="dropdown-item" href="https://dimafitness.com/nutritions">Хранителен състав на продукти и напитки</a>
+
+                    <div class="dropdown">
+                        <a class="dropdown-item dropdown-toggle" href="https://dimafitness.com/nutritions#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Уроци</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="https://dimafitness.com/nutritions#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Видео</a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/video/grb-1">Гръб</a>
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/video/grdi-1">Гърди</a>
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/video/prastsi-1">Прасци</a>
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/video/ramene-1">Рамене</a>
+                                                                    </div>
+                            </div>
+
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="https://dimafitness.com/nutritions#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Снимки</a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/photos/grb-1">Гръб</a>
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/photos/grdi-1">Гърди</a>
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/photos/prastsi-1">Прасци</a>
+                                                                            <a class="dropdown-item" href="https://dimafitness.com/training/photos/ramene-1">Рамене</a>
+                                                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://dimafitness.com/nutritions#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Програми</a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="https://dimafitness.com/personal-trainings">Персонални тренировки</a>
+
+                    <!-- <a class="dropdown-item" href="/group-trainings">Групови тренировки</a> -->
+
+                    <a class="dropdown-item" href="https://dimafitness.com/questionnaire">Хранителен и тренировъчен режим</a>
+                </div>
+            </li>
+            
+           
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://dimafitness.com/nutritions#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Рецепти</a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                                        <a class="dropdown-item" href="https://dimafitness.com/recipes/category/niskovglekhidratni-retsepti-1">Нисковъглехидратни рецепти</a>
+                                                                                                <a class="dropdown-item" href="https://dimafitness.com/recipes/category/deserti-1">Десерти</a>
+                                                            </div>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://dimafitness.com/nutritions#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Галерия</a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="https://dimafitness.com/gallery/photos">Снимки</a>
+                    <a class="dropdown-item" href="https://dimafitness.com/gallery/video">Видео</a>
+                </div>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="https://dimafitness.com/nutritions#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">За мен</a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="https://dimafitness.com/about/my-story">Моята история</a>
+
+                    <a href="https://dimafitness.com/about/feedback" class="dropdown-item">Обратна връзка</a>
+
+                    <!-- <div class="dropdown">
+                        <a class="dropdown-item dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Предстоящи събития</a>
+
+                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="/about/events/innovative-trainings" class="dropdown-item">Иновативни тренировки</a>
+
+                            <a href="/about/events/competitions" class="dropdown-item">Състезания</a>
+                        </div>
+                    </div> -->
+                </div>
+            </li>
+            
+            <li class="nav-item active">
+                <a class="nav-link" href="https://dimafitness.com/news">Новини</a>
+            </li>
+
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="/instructors">Инструктори</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/dna-test">ДНК тест</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/motivation">Мотивация</a>
+            </li> --> 
+        </ul>
+    </div>
+</nav>
+    <main class="main">
+            <div class="section-cutted-edge-wrapper top">
+    <div class="section-cutted-edge teal">
+        <div class="section-inner" style="background-image: url(/assets/css/images/temp/heads/library.jpg)">
+            <div class="container">
+                <p class="section-title">Хранителна стойност</p>
+            </div><!-- /.container -->
+        </div><!-- /.section-inner -->
+    </div>
+</div>        <div class="section">
+    <div class="section-head">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <p class="section-title">Хранителен състав на продукти и напитки</p><!-- /.section-title -->
+
+                    <form id="search_ingredient_form" method="post" action="https://dimafitness.com/nutritions/by-category" class="form-rounded w-md-75 mt-5 mx-auto">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" placeholder="Въведете продукт" name="search" value="Продукт">
+
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-teal" type="submit" id="button-addon" onclick="document.getElementById(&#39;search_ingredient_form&#39;).submit();">
+                                    <i class="far fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- /.col-md-8 offset-md-2 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.section-head -->
+
+    <div class="section-body">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb px-0 bg-transparent">
+                    <li class="breadcrumb-item"><a href="https://dimafitness.com/en">Начало</a></li>
+
+                    <li class="breadcrumb-item"><a href="https://dimafitness.com/nutritions">Полезно &amp; Безплатно</a></li>
+
+                    <li class="breadcrumb-item active" aria-current="page">Хранителен състав на продукти и напитки</li>
+                </ol>
+            </nav>
+
+            <div class="row">
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=agneshki-produkti-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa2fff8c904688357772.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=agneshki-produkti-1">Агнешки продукти</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=bilki-i-podpravki-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa3090a6185202034147.jpeg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=bilki-i-podpravki-1">Билки и подправки</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=bobovi-kulturi-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa30cb921d2632689122.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=bobovi-kulturi-1">Бобови култури</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=brandirani-produkti-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa319d9ccc0787674663.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=brandirani-produkti-1">Брандирани продукти</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=govezhdi-produkti-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa31e8540ec658074973.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=govezhdi-produkti-1">Говежди продукти</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=divech-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa32fe4f067459179707.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=divech-1">Дивеч</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=zamestiteli-na-khrana-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa3393ae0fb662542301.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=zamestiteli-na-khrana-1">Заместители на храна</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=zakharni-izdeliia-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa33ea03f06189607358.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=zakharni-izdeliia-1">Захарни изделия</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=zelenchutsi-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa34564e7f6133450289.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=zelenchutsi-1">Зеленчуци</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=zrneni-kulturi-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa34cc1bf82318529055.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=zrneni-kulturi-1">Зърнени култури</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=kolbasi-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa3544e2b21126414462.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=kolbasi-1">Колбаси</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                                    <div class="col-6 col-md-3 my-3">
+                        <div class="card card-post">
+                            <a href="https://dimafitness.com/nutritions?slug=konservirani-khrani-1" class="image-hover-border">
+                                <img src="./Хранителна стойност_files/5dfa35e066acc316252738.jpg" height="290" width="290" class="card-img-top" alt="...">
+                            </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title w-100 text-center">
+                                    <a href="https://dimafitness.com/nutritions?slug=konservirani-khrani-1">Консервирани храни</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div><!-- /.col-6 -->
+                            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.section-body -->
+    <div class="section-bottom">
+            <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+
+                        
+                                                <li class="page-item active">
+                        <a class="page-link" href="https://dimafitness.com/nutritions#">1</a>
+                    </li>
+                
+                                                <li class="page-item"><a class="page-link" href="https://dimafitness.com/nutritions?page=2">2</a></li>
+                
+                                                <li class="page-item"><a class="page-link" href="https://dimafitness.com/nutritions?page=3">3</a></li>
+                
+            
+                                        <li class="page-item page-item-next"><a class="page-link" href="https://dimafitness.com/nutritions?page=2"><i class="fas fa-arrow-right"></i></a></li>
+                    </ul>
+
+    </nav>
+
+    </div><!-- /.section-bottom -->
+</div><!-- /.section -->
+<div class="section-cutted-edge-wrapper bottom">
+    <div class="section-cutted-edge yellow">
+        <div class="section-inner bg-gray-2">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1 text-center text-md-right">
+                        <img src="./Хранителна стойност_files/logo-dark.png" height="143" width="401" alt="">
+                    </div><!-- /.col-10 offset-1 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.section-inner -->
+    </div>
+</div>    </main>
+
+    <div class="footer-bar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <p class="copyrights">
+                    ©Copyright 2023. Dima Todorova, All rights reserved
+                                             |
+                        <a href="https://dimafitness.com/policy/rules">Rules </a>
+                                    </p><!-- /.copyrights -->
+                <p class="credits">Created by <a href="http://www.igcbg.com/"><i class="sprite-logo-igc"></i></a></p><!-- /.credits -->
+            </div><!-- /.col-10 offset-1 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.footer-bar --></div><!-- /.wrapper -->
+
+</body></html>

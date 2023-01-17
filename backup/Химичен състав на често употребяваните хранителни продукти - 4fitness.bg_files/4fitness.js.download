@@ -1,0 +1,6 @@
+$( document ).ready(function() {
+    $("#captcha_reload").click(function () {
+        var d = new Date();
+        $("#captcha").attr("src", baseUrl + "captcha.php?t=" + d.getTime());
+    });
+});
