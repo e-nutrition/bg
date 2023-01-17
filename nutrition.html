@@ -521,10 +521,11 @@ function search_table()
   var filter_array = filter.split(',');
   //console.log(filter_array);
   
-  for (var i = 0; i < filter_array.length; i++) {
+  for (var i = 0; i < filter_array.length; i++) 
+  {
     filter_array[i] = filter_array[i].trim();
   }
-  console.log(filter_array);
+  //console.log(filter_array);
   
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) 
