@@ -1,0 +1,363 @@
+var APIKEY = '1dc714ac42aa2a6a61255e39acf722a6';
+var APISECRET = '58472b6d50c4f39efe116dbf4272f397';
+var APPID = '103217876378488';
+
+// Facebook JS
+
+/*
+ * The facebook_onload statement is printed out in the PHP. If the user's logged in
+ * status has changed since the last page load, then refresh the page to pick up
+ * the change.
+ *
+ * This helps enforce the concept of "single sign on", so that if a user is signed into
+ * Facebook when they visit your site, they will be automatically logged in -
+ * without any need to click the login button.
+ *
+ * @param already_logged_into_facebook  reports whether the server thinks the user
+ *                                      is logged in, based on their cookies
+ *
+ */
+ 
+function facebook_onload(already_logged_into_facebook) {
+		/*
+		var uid = FB.Connect.get_loggedInUser();
+				
+		if (uid) {	
+			jQuery.ajax({
+				type: "GET", url: "/ajax/check_facebook_cookie;uid=" + uid,
+				dataType: "text", contentType: "text/plain",
+				success: auto_login_fb_connect
+			});
+		}
+		else {
+	
+		  // user state is either: has a session, or does not.
+		  // if the state has changed, detect that and reload.
+		  FB.ensureInit(function() {
+			  FB.Facebook.get_sessionState().waitUntilReady(function(session) {
+				  var is_now_logged_into_facebook = session ? true : false;
+
+				  // if the new state is the same as the old (i.e., nothing changed)
+				  // then do nothing
+				  if (is_now_logged_into_facebook == already_logged_into_facebook) {
+					return false;
+				  }
+
+				  // otherwise, refresh to pick up the state change
+				  //refresh_page();
+				  //window.location = '?home2';
+					return false;
+				});
+			});
+		}
+		*/
+		return false;
+}
+
+/*
+ * Our <fb:login-button> specifies this function in its onlogin attribute,
+ * which is triggered after the user authenticates the app in the Connect
+ * dialog and the Facebook session has been set in the cookies.
+
+function facebook_onlogin_ready() {
+		
+  // In this app, we redirect the user back to index.php. The server will read
+  // the cookie and see that the user is logged in, and will deliver a new page
+  // with content appropriate for a logged-in user.
+  //
+  // However, a more complex app could use this function to do AJAX calls
+  // and/or in-place replacement of page contents to avoid a full page refresh.
+  	var uid = FB.Connect.get_loggedInUser();
+
+	jQuery.ajax({
+				type: "GET", url: "/ajax/facebook_check_cookie.php?uid=" + uid,
+				dataType: "text", contentType: "text/plain",
+				success: show_connect_dialog
+	});
+			
+	//refresh_page();
+}
+ */
+function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      //console.log('Successful login');
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+}
+
+function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+}
+
+//function facebook_onlogin_ready() {
+window.fbAsyncInit = function() {
+	FB.init({appId: APPID, status: true, cookie: true, xfbml: true});
+
+	FB.getLoginStatus(function(response) {
+    	statusChangeCallback(response);
+  	});
+
+};
+
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+}
+
+
+
+ 
+function facebook_onlogin_ready() {
+	FB.init(APPID, "/xd_receiver.htm"); 
+	
+  // In this app, we redirect the user back to index.php. The server will read
+  // the cookie and see that the user is logged in, and will deliver a new page
+  // with content appropriate for a logged-in user.
+  //
+  // However, a more complex app could use this function to do AJAX calls
+  // and/or in-place replacement of page contents to avoid a full page refresh.
+	FB.ensureInit(function() {
+		FB.Connect.requireSession(
+			function()
+			{
+				var uid = FB.Connect.get_loggedInUser();
+				jQuery.ajax({
+							type: "GET", url: "/ajax/facebook_check_cookie.php?uid=" + uid,
+							dataType: "text", contentType: "text/plain",
+							success: show_connect_dialog
+				});
+		})
+	});
+	//refresh_page();
+}
+
+/*
+ * Do a page refresh after login state changes.
+ * This is the easiest but not the only way to pick up changes.
+ * If you have a small amount of Facebook-specific content on a large page,
+ * then you could change it in Javascript without refresh.
+ */
+/*
+ * Prompts the user to grant a permission to the application.
+ */
+function facebook_prompt_permission(permission) {
+  FB.ensureInit(function() {
+    FB.Connect.showPermissionDialog(permission);
+  });
+}
+
+/*
+ * Show the feed form. This would be typically called in response to the
+ * onclick handler of a "Publish" button, or in the onload event after
+ * the user submits a form with info that should be published.
+ *
+ */
+function facebook_publish_feed_story(form_bundle_id, template_data) {
+  // Load the feed form
+  FB.ensureInit(function() {
+          FB.Connect.showFeedDialog(form_bundle_id, template_data);
+          //FB.Connect.showFeedDialog(form_bundle_id, template_data, null, null, FB.FeedStorySize.shortStory, FB.RequireConnect.promptConnect);
+
+      // hide the "Loading feed story ..." div
+      document.getElementById('feed_loading').style.visibility = "hidden";
+  });
+}
+
+/*
+ * If a user is not connected, then the checkbox that says "Publish To Facebook"
+ * is hidden in the "add run" form.
+ *
+ * This function detects whether the user is logged into facebook but just
+ * not connected, and shows the checkbox if that's true.
+ */
+function facebook_show_feed_checkbox() {
+  FB.ensureInit(function() {
+      FB.Connect.get_status().waitUntilReady(function(status) {
+          if (status != FB.ConnectState.userNotLoggedIn) {
+            // If the user is currently logged into Facebook, but has not
+            // authorized the app, then go ahead and show them the feed dialog + upsell
+            checkbox = ge('publish_fb_checkbox');
+            if (checkbox) {
+              checkbox.style.visibility = "visible";
+            }
+          }
+        });
+    });
+}
+
+function refresh_page() {
+	var uid = FB.Connect.get_loggedInUser();
+
+	if (uid) {
+		jQuery.ajax({
+			type: "GET", url: "http://blog.bg/ajax/facebook_set_session.php?uid=" + uid,
+			dataType: "text", contentType: "text/plain",
+			success: checkPermissions
+		});
+		
+	}
+	
+		var form = 
+				'<form class="userdata" action="/login.php" method="post">'+
+				'<p>Моля, влезте с вече съществуващ ваш акаунт в Blog.bg <br/></p>'+
+				'<ul>'+
+					'<table width="300" cellspacing="5" cellpadding="5">\
+						<tr>\
+							<td width="100"><label for="username">Потребител:</label></td>\
+							<td width="200"><input id="login_user" size="32" class="text" type="text" value="" name="username"/>\
+							</td>\
+						</tr>\
+						<tr>\
+							<td><label for="password">Парола:</label></td>\
+							<td><input size="32" id="login_pass" class="password" type="password" value="" name="password"/></td>\
+						</tr>'+
+						'<tr>'+
+							'<td>&nbsp;</td>'+
+							'<td><a class="left20" href="/register.php?get_fb_info"> Регистрация в Blog.bg  </a></td>'+
+						'</tr>'+
+						'</table>'+
+						'<p style="text-align: center;">'+
+							'<input class="btn btn_big" id="btnFacebookConnectLogin" type="submit" value="Вход" title="Вход" />'+
+							'<input type="hidden" name="log_user_x" value="1" />'+
+							'<input type="hidden" id="fb_id" name="fb_id" value="'+uid+'" />'+
+						'</p>'+
+					'</li>'+
+				'</ul>'+
+			'</form>'+
+		'<div class="clear"></div>';
+		
+		alert(form);
+		
+		boxyLoginMessage = new Boxy(	form, {
+			title: 'Влез в Blog.bg',
+			closeText: '[затвори]',
+			draggable: true,
+			modal: true
+		});
+		
+		boxyLoginMessage.moveTo(200, 80);
+	
+}
+
+/*
+ * Prompts the user to grant a permission to the application.
+ */
+ 
+ jQuery("#btnFacebookConnectLogin").live('click', function() {
+	jQuery.ajax({
+			type: "GET", url: "http://blog.bg/ajax/facebook_login.php?username=" + $('#login_user').val() + "&password="+$('#login_pass').val(), 
+			dataType: "text", contentType: "text/plain",
+			success: updateFacebookConnectLogin
+		});
+		
+	return false;
+});
+
+ jQuery("#btnFacebookConnectRegister").live('click', function() {	
+	jQuery.ajax({
+			type: "GET", url: "/ajax/facebook_register.php?username=" + $('#username').val() + "&email="+$('#email').val(), 
+			dataType: "text", contentType: "text/plain",
+			success: updateFacebookConnectRegister
+		});
+		
+	return false;
+});
+
+updateFacebookConnectLogin = function(data) {
+	if (data != 'SUCCESS') {
+		Boxy.alert(data);
+	}
+	else {
+		boxyLoginMessage.hide();
+		var form = 
+				'<div style="width: 500px;">'+
+				'<p>Профилът ви в Blog.bg беше успешно обвързан с профила ви във Facebook.</p>'+
+				'</div>';
+				
+		boxyAlert = new Boxy(form, {
+			title: 'Съобщение',
+			closeText: '[затвори]',
+			draggable: true,
+			modal: true,
+			afterHide: function() { window.location = 'http://blog.bg/post.php'; } });
+		
+		boxyAlert.moveTo(200, 80);
+	}
+}
+
+updateFacebookConnectRegister = function(data) {
+
+	if (data != 'SUCCESS') {
+		Boxy.alert(data);
+	}
+	else {
+		boxyLoginMessage.hide();
+		var form = 
+				'<div style="width: 500px;">'+
+				'<p>Профилът ви в Snimka.bg беше успешно обвързан с профила ви във Facebook.</p>'+
+				'<p>Сега, когато качите нова снимка или албум в Snimka.bg и отбележите, че желаете</p>'+
+				'<p>това действие да се публикува в профила ви във Facebook, приятелите ви бързо и </p>'+
+				'<p>лесно ще достигат до вашите нови сники.</p></div>';
+				
+		boxyAlert = new Boxy(form, {
+			title: 'Съобщение',
+			closeText: '[затвори]',
+			draggable: true,
+			modal: true,
+			afterHide: function() { window.location = '/'; } });
+		
+		boxyAlert.moveTo(200, 80);
+	}
+}
+
+checkPermissions = function(data) {
+	if(data != true) 
+	{
+		facebook_prompt_permission('publish_stream');
+	}
+}
+
+auto_login_fb_connect = function(data) {
+	if(data != 'FAIL') {
+		window.location = '?profile,albums';
+	}
+	else return false;
+}
+
+show_connect_dialog = function(data) {
+
+	if(data != 'FAIL' && data !='LOGGED' && data != '') {
+		window.location = 'http://blog.bg/post.php';
+	}
+	else refresh_page();
+}

@@ -1,0 +1,95 @@
+var cookie_domain = '.blog.bg';
+var cookie_expire = 30;
+
+jQuery(document).ready(function()
+{	
+	var modals = jQuery(".newModal");
+	
+	for (i = 0; i < modals.length; i++)
+	{
+		var modal = $(modals[i]);
+		var data = $(modals[i]).attr('rel').split("|");
+		
+		var modalId = data[0];
+		var modalHeight = data[1];
+		var modalWidth = data[2];
+		var modalDirection = data[3];
+		
+		if($.cookie('modal_'+ modalId) < 1)
+		{
+			var offset = modal.offset(); 
+			
+			var style = '';
+			var arrowStyle = '';
+			
+			var left_position = offset.left;
+			var top_position = offset.top;
+			var right_position = offset.left + modal.width();
+			var bottom_position = offset.top + modal.height();
+			
+			switch (modalDirection)
+			{	
+				case 'north':
+					left_position = left_position + 10;
+					top_position =  bottom_position + 10;
+					style = "top: " + top_position + "px; left:" + left_position + "px; ";
+					arrowStyle = "top: -12px; width: 40px; ";
+					break;	
+				case 'east':
+					left_position = (left_position - 10) - modalWidth;
+					top_position =  top_position + 10;
+					style = "top: " + top_position + "px; left:" + left_position + "px; ";
+					arrowStyle = "height: 40px; ";
+					break;
+				case 'south':
+					left_position =  left_position + 10;
+					top_position = top_position - 10;
+					style = "top: " + top_position + "px; left:" + left_position + "px; ";
+					arrowStyle = "bottom: -13px; width: 40px;";
+					break;
+				case 'west':
+					left_position = right_position + 10;
+					top_position = top_position + 10;
+					style = "top: " + top_position + "px; left:" + left_position + "px; ";
+					arrowStyle = "height: 40px; ";
+					break;	
+				default:
+					break;
+			}
+			
+			style = style + "width: " + modalWidth + "px; height: " + modalHeight + "px; ";
+			
+			modalText = "<a style='background: none;float:right;height:10px;width:10px;' href='#' onClick='$(\"#hanging"+modalId+"\").remove(); return false;'>"+
+							"<img src='/images/cancel.png' />" +
+						"</a><br clear='all'/>" + $('#modalText_' + modalId).html();
+			
+			// add modal html
+			
+			var newModal = "\
+				<div class='hanging' id='hanging" + modalId + "' style='" + style + "'>\
+					<div class='modal'>\
+						<div class='modal-inner'>";
+						
+						
+			if (modalDirection == 'south' || modalDirection == 'east') 
+			{
+				newModal += "<div class='modal-content'>" + modalText + "</div>";
+				newModal += "<div class='" + modalDirection + "' style='" + arrowStyle + "'> &nbsp; </div>";
+			}
+			else 
+			{
+				newModal += "<div class='" + modalDirection + "' style='" + arrowStyle + "'> &nbsp; </div>";
+				newModal += "<div class='modal-content'>" + modalText + "</div>";
+			}
+			
+			newModal += "</div>\
+					</div>\
+				</div>";
+			$.cookie('modal_' + modalId, '1', { expires: cookie_expire, path: '/', domain: cookie_domain });
+			
+			modal.append(newModal);
+			//alert(modalText);
+			//alert(orientation);
+		}
+	}
+});

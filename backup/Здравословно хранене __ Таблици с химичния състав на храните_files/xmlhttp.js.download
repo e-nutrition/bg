@@ -1,0 +1,216 @@
+var DOMAIN_NAME = 'http://blog.dev/';
+
+
+/* XML HTTP Functions */
+function XMLHTTP_Initialize(){
+    try{
+        req=new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch(e){
+        try {
+            req=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        catch(oc){
+            req=null;
+        }
+    }
+    if(!req&&typeof XMLHttpRequest!="undefined"){
+        req= new
+   	 	XMLHttpRequest();
+	}
+
+} 
+
+function XMLHTTP_SendQuery($url, callback){
+	if($url=="") return;
+	
+    XMLHTTP_Initialize(); 
+    if(req!=null){
+        req.onreadystatechange = callback;
+        req.open("GET", $url,true);
+	    req.send(null);
+    }
+}
+
+function formatItem(row) {
+		return row[0] + " (<strong>id: " + row[1] + "</strong>)";
+}
+
+function formatResult(row) {
+		return row[0].replace(/(<.+?>)/gi, '');
+}
+	
+	
+var post_id = 0;
+var vote_id = 0;
+
+function vote($post_id,$vote){
+
+	post_id = $post_id;
+	vote_id = $vote;
+	
+	$url="process_vote.php?vote="+$vote+"&pid="+$post_id;
+	XMLHTTP_SendQuery($url, updateVotes);
+	return false;
+}
+
+function textCounter(field, countfield, maxlimit) {
+
+	if (field.value.length > maxlimit) field.value = field.value.substring(0, maxlimit);
+
+	else countfield.value = maxlimit - field.value.length;
+
+}
+
+	jQuery(".MyTagHover").livequery('mouseover', function() {
+			jQuery(".myTagDel", this).show();
+	});	
+
+	jQuery(".MyTagHover").livequery('mouseout', function() {
+			jQuery(".myTagDel", this).hide();
+	});	
+
+	jQuery(".myTagDel").live('click', function() {
+			photoId = jQuery(this).attr("rel");
+			tagStr = jQuery(this).attr("title");
+
+			if ( tagStr != '' && photoId > 0 )
+			{
+				jQuery(this).parent().parent().hide();
+				
+				/*
+				jQuery.ajax({
+					type: "GET", 
+					url: "ajax/tag_del.php?pid="+photoId+"&tag="+tagStr,
+					success: updateTags,
+					error: updateTags
+				});
+				
+				
+				jQuery.get("/ajax/tag_del.php", { pid : photoId, tag: tagStr }, updateTags);
+				*/
+				
+				$url="ajax/tag_del.php?pid="+photoId+"&tag="+tagStr;
+				XMLHTTP_SendQuery($url);
+				return false;
+			}
+	});	
+	
+	jQuery("#aTag_add_btn").click(function() {
+		
+		var tagStr = jQuery("#aTag_add_txt").attr('value');
+		var photoId = jQuery(this).attr("rel");
+			
+		if ( tagStr != '' && photoId > 0 )
+		{
+			jQuery.ajax({
+					type: "GET", 
+					url: "ajax/tag_add.php?pid="+photoId+"&tag="+tagStr,
+					success: updateTags
+				});
+		}
+		
+		return false;
+	});	
+
+	jQuery("#aTag_add_txt").autocomplete("ajax/tag_autocomplete.php", {
+		width: 300,
+		minChars: 3,
+		max: 12,
+		delay: 400,
+		autoFill: false,
+		scroll: true
+	});
+
+function updateVotes(){
+	if (req.readyState == 4){
+
+        if (req.status == 200){
+        	if (req.responseText) {
+				if (req.responseText!="not logged") 
+				{
+					document.getElementById('rating').innerHTML = req.responseText;
+					//document.getElementById('vote').innerHTML = '<span class="vote_ok">Гласът ви бе приет!</span>';
+					
+					var new_rating = parseInt(document.getElementById('vote'+vote_id).innerHTML);
+					
+					if (vote == 0) 	new_rating--;
+					else new_rating++;
+						
+					document.getElementById('vote'+vote_id).innerHTML = new_rating;
+					document.getElementById('voteDown').className='comments-grade-down-static';
+					document.getElementById('voteUp').className='comments-grade-up-static';
+					
+					$('#vote_msg').html('<span class="vote_ok" style="margin-left:150px;">Гласът ви бе приет!</span>');
+					$('#vote_msg').css('display','block');
+				}
+				else 
+				{ 
+					
+					$('#vote_msg').html('<span class="vote_error">'+
+					'Само регистрирани потребители могат да гласуват!<br/>' +
+					'<a href="/login.php?dovote=' + vote_id + '&post_id=' + post_id + '"> Логнете се </a> или се ' +
+					'<a href="/register.php"> регистрирайте </a>!' +
+					'</span>');
+					
+					$('#vote_msg').css('display','block');
+				}
+			}
+        }
+        
+   }
+}
+
+function updateTags(data)
+{
+	var results = data.split("-");
+	var tags = results[0].split(",");
+	var photo = results[1];
+	
+	var tagsStr = '';
+
+	if ( data == "ERR_INVALID_TAG" )
+	{
+		alert('Невалиден/нецензурен таг.');
+	}
+	else 
+	{
+		for (var i = 0; i < tags.length; i++)
+		{
+			var tag = tags[i];
+			
+			tagsStr += '<span class="myTag MyTagHover">';
+				
+			tagsStr += '<span class="myTagS"><span class="myTagDel" rel="'+photo+'" title="'+tag+'"> &nbsp; </span><a href="/tag.php?tag='+tag+'"> ' + tag + '</a> <wbr/></span>, ';
+			tagsStr += '</span>';
+		}	
+		
+		jQuery('#mTags'+photo).append(tagsStr);
+		$('#aTag_add_txt').attr('value', '');
+	}
+	
+	return false;
+}
+
+// timeout functions
+
+var timeout; 
+
+function showDropdown(elm)
+{
+	if(!elm) return false;
+	
+	$('#' + elm).css('visibility', 'visible');
+	
+	timeout = window.setTimeout("closeDropdown('"+elm+"')",3000);
+	
+}
+
+function closeDropdown(elm)
+{
+	if(!elm) return false;
+	
+	$('#' + elm).css('visibility', 'hidden');
+	
+	window.clearTimeout(timeout);
+}

@@ -19,6 +19,7 @@
     <div class="col-lg-8 mx-auto p-3">
         <div class="text-center"><a href="/bg"><img src="logo/logo.png" width="80" height="80"></a></div>
         <h1 class="text-center">Хранителен състав на храни и продукти</h1>
+        <p class="text-center">Брой продукти в таблицата: <span id="table-rows">0</span></p>
         <br>
         
         <div class="input-group input-group-lg">
@@ -27,6 +28,8 @@
           <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('search-table-input').value = '';document.getElementById('search-table-input').focus();search_table()">X</button>
         </div>
         <br>
+        
+        <p class="text-center">Количеството Протеини, Мазнини, Въглехидрати и Калории е дефинирано за 100 гр./мл. продукт за всички изброени храни/напитки</p>
 
         <table class="GridViewTable table table-striped table-bordered table-hover table-sm" cellspacing="0" cellpadding="4" align="Center" id="nutrition-table" style="border-collapse:collapse;">
         <tr class="HeaderStyle">
@@ -627,6 +630,9 @@ window.addEventListener('load', function () {
     var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate();
     console.log(date);
     //document.getElementById("today").innerHTML = date;
+    
+    var table_rows = document.getElementById("nutrition-table").rows.length;
+    document.getElementById("table-rows").innerHTML = table_rows;
     
     var search = getUrlParameter("search");
     if(search)
