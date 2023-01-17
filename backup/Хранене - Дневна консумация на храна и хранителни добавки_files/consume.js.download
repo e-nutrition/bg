@@ -1,0 +1,20 @@
+var MISS_AMOUNT='Моля въведете количество.';var WRONG_AMOUNT='Моля въведете число за количество храна/напитка в интервала 1-1000.';var MISS_FOOD='Моля изберете храна.';var NO_LOG_IN='Трябва да сте регистриран потребител за да може да добавите храна!';$(document).ready(function(){$('input[numeric]').keyup(function(){var d=$(this).attr('numeric');var value=$(this).val();var orignalValue=value;value=value.replace(/[0-9]*/g,"");var msg="Only Integer Values allowed.";if(d=='decimal'){value=value.replace(/\./,"");msg="Only Numeric Values allowed.";}
+if(value!=''){orignalValue=orignalValue.replace(/([^0-9].*)/g,"")
+$(this).val(orignalValue);}
+else{}});})
+function CallService(value){var lBox=$('select[id$=lstFood]');$.ajax({type:"POST",url:"WebService.asmx/GetFood",data:"{food:'"+value+"'}",contentType:"application/json; charset=utf-8",dataType:"json",success:function(msg){lBox.empty();var gender=msg.d;if(gender.length>0){var listItems=[];for(var key in gender){listItems.push('<option value="'+
+gender[key].Guid+'">'+gender[key].Name
++'</option>');}
+$(lBox).append(listItems.join(''));}
+else{}},error:function(XMLHttpRequest,textStatus,errorThrown){alert(textStatus);}});}
+function ShowFoodList(value){var lBox=$('select[id$=lstFood]');$.ajax({type:"POST",url:"WebService.asmx/GetFoodsByType",data:"{food:'"+value+"'}",contentType:"application/json; charset=utf-8",dataType:"json",success:function(msg){lBox.empty();var gender=msg.d;if(gender.length>0){var listItems=[];for(var key in gender){listItems.push('<option value="'+
+gender[key].Guid+'">'+gender[key].Name
++'</option>');}
+$(lBox).append(listItems.join(''));}
+else{}},error:function(XMLHttpRequest,textStatus,errorThrown){alert(textStatus);}});}
+function Confirm(){var obj1=$get("TextBox1").value;if(obj1==""){alert(MISS_AMOUNT);return}
+if(isNaN(obj1)||obj1<1||obj1>1000){alert(WRONG_AMOUNT);return}
+var obj2=$get("BodyPlaceHolder_lstFood");var num=obj2.selectedIndex;if(num==-1){alert(MISS_FOOD);return;}
+var str=obj2.options[num].value;$.ajax({type:"POST",url:"WebService.asmx/ConsumeFood",data:"{value1:'"+str+"',value2:'"+obj1+"'}",contentType:"application/json; charset=utf-8",dataType:"json",success:function(result){if(result.d==0)
+alert(NO_LOG_IN);if(result.d==1)
+window.location="https://CalorienBalans.com/Consume";},error:function(XMLHttpRequest,textStatus,errorThrown){alert(textStatus);}});}
