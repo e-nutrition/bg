@@ -787,6 +787,19 @@ function search_table()
             tr[i].style.display = "none";
         }
     }
+    
+    th = tr[i].getElementsByTagName("th")[0];
+    if(th)
+    {
+        if(i != 0 && filter !== "")
+        {
+            tr[i].style.display = "none";
+        }
+        else
+        {
+            tr[i].style.display = "";
+        }
+    }
   }
 }
 
