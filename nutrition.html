@@ -6,11 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.7">
   <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="bootstrap/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet">
   <script src="bootstrap/bootstrap.bundle.min.js"></script>
   <style>
     table {
         margin: auto;
         width: 100%;
+    }
+    #btn-back-to-top {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        display: none;
     }
   </style>
 </head>  
@@ -28,8 +35,20 @@
           <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('search-table-input').value = '';document.getElementById('search-table-input').focus();search_table()">X</button>
         </div>
         <br>
-        
-        <p class="text-center">Количеството Протеини, Мазнини, Въглехидрати и Калории е дефинирано за 100 гр./мл. продукт за всички изброени храни/напитки</p>
+        <p class="text-center">
+        Категории <br>
+        <a href="#meat">Месо, месни продукти и яйца</a><br>
+        <a href="#fish">Риба и рибни продукти</a><br>
+        <a href="#milk">Мляко и млечни продукти</a><br>
+        <a href="#bread">Хлебни изделия и зърнени храни</a><br>
+        <a href="#vegetables">Зеленчуци</a><br>
+        <a href="#fruits-and-nuts">Плодове и ядки</a><br>
+        <a href="#other">Други хранителни продукти</a><br>
+        <a href="#sugar">Захарни изделия</a><br>
+        <a href="#drinks">Безалкохолни Напитки</a><br>
+        <a href="#user">Добавени от потрбителят</a><br>
+        </p>
+        <p class="text-center">100 г/мл съдържат:</p>
 
         <table class="GridViewTable table table-striped table-bordered table-hover table-sm" cellspacing="0" cellpadding="4" align="Center" id="nutrition-table" style="border-collapse:collapse;">
         <tr class="HeaderStyle">
@@ -507,8 +526,18 @@
         <td>Няма</td><td> </td><td> </td><td> </td><td> </td>
         </tr>
         </table>
+        
+        <p class="text-center">Количеството Протеини, Мазнини, Въглехидрати и Калории е дефинирано за 100 грaма/милилитра продукт за всички изброени храни/напитки</p>
     </div>
 </div>
+<!-- Back to top button -->
+<button
+        type="button"
+        class="btn btn-light btn-lg back-to-top"
+        id="btn-back-to-top"
+        >
+    <i class="fa fa-chevron-up"></i>
+</button>
 </body>
 <script>
 function search_table() 
@@ -641,5 +670,31 @@ window.addEventListener('load', function () {
         search_table();
     }
 });
+
+//Get the button
+let mybutton = document.getElementById("btn-back-to-top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (
+    document.body.scrollTop > 20 ||
+    document.documentElement.scrollTop > 20
+  ) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+// When the user clicks on the button, scroll to the top of the document
+mybutton.addEventListener("click", backToTop);
+
+function backToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 </script>
 </html>
