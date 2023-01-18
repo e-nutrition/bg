@@ -41,7 +41,7 @@
         
         <div class="input-group input-group-lg">
           <span class="input-group-text" id="inputGroup-sizing-lg">Търси</span>
-          <input type="text" id="search-table-input" onkeyup="search_table()" placeholder="Изброй с запетаи. картоф,банан..." class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+          <input type="text" id="search-table-input" onkeyup="search_table()" placeholder="Изброй със запетаи. картоф,банан..." class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
           <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('search-table-input').value = '';document.getElementById('search-table-input').focus();search_table()">X</button>
         </div>
         <br>
@@ -56,7 +56,7 @@
         <a href="#other">🍔 Други хранителни продукти</a><br>
         <a href="#sugar">🍫 Захарни изделия</a><br>
         <a href="#drinks">🥤 Безалкохолни Напитки</a><br>
-        <a href="#user">👤 Добавени от потрбителят</a><br>
+        <a href="#user">👤 Добавени от потребителя</a><br>
         </p>
         <p class="text-center">100 г/мл съдържат:</p>
         <div class="text-center text-muted"><small>Легенда<br> 💪 Протеини | 🔋 Мазнини | ⚡ Въглехидрати | 🔥 Калории </small></div>
@@ -688,7 +688,7 @@
         >🔥<label class="d-none d-sm-none d-md-inline"> Калории</label></th>
         </tr>
         <tr>
-        <td colspan="5" align="center"><a href="#user" name="user"><b>👤 Добавени от потрбителят</b></a></td>
+        <td colspan="5" align="center"><a href="#user" name="user"><b>👤 Добавени от потребителя</b></a></td>
         </tr>
         <tr>
         <td>Няма</td><td> </td><td> </td><td> </td><td> </td>
@@ -709,7 +709,7 @@
         <a href="#other">🍔 Други хранителни продукти</a><br>
         <a href="#sugar">🍫 Захарни изделия</a><br>
         <a href="#drinks">🥤 Безалкохолни Напитки</a><br>
-        <a href="#user">👤 Добавени от потрбителят</a><br>
+        <a href="#user">👤 Добавени от потребителя</a><br>
         </p>
     </div>
 </div>
@@ -879,16 +879,17 @@ window.addEventListener('load', function () {
         document.getElementById("search-table-input").value = search;
         search_table();
     }
+    
+    window.onscroll = function () {
+      scrollFunction();
+    };
+
 });
 
 //Get the button
 let mybutton = document.getElementById("btn-back-to-top");
 
 // When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function () {
-  scrollFunction();
-};
-
 function scrollFunction() {
   if (
     document.body.scrollTop > 20 ||
