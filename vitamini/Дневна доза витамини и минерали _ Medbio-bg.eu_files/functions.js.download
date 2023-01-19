@@ -1,0 +1,358 @@
+// JavaScript Document
+function sh_div(what, what2) {
+	 var i=1;
+	 var coll = [];
+	 var coll2 = [];
+	 while (document.getElementById('d'+ i)) {
+	  coll[i] = document.getElementById('d'+ i);
+	  coll2[i] = document.getElementById('t'+ i);
+		
+		i++;
+	 }
+ obj = document.getElementById(what);
+ obj2 = document.getElementById(what2);
+ var i=1;
+ if (obj.className == 'off') {
+	 while (coll[i]) {
+		coll[i].className = 'off';
+		coll2[i].className = 'lang_tabs';
+		
+		i++;
+		} 
+	obj.className = 'on';
+	obj2.className = 'lang_tabs_active';
+ } 
+}
+function sh_par(what, what2, lang) {
+	 var coll = [];
+	 var coll2 = [];
+	 for (i=0; i<param_id.length; i++) {
+	  coll[i] = document.getElementById('par_'+lang+'_'+ param_id[i]);
+	  coll2[i] = document.getElementById('p_'+lang+'_'+ param_id[i]);
+	 }
+ obj = document.getElementById(what);
+ obj2 = document.getElementById(what2);
+ var i=0;
+ if (obj.className == 'off') {
+	 while (coll[i]) {
+		coll[i].className = 'off';
+		coll2[i].className = 'par_tabs';
+		
+		i++;
+		} 
+	obj.className = 'on';
+	obj2.className = 'par_tabs_active';
+ } 
+}
+function sh_hide_div(div_,what) {
+	 var i=1;
+	 while (document.getElementById(div_+i)) {
+	 document.getElementById(div_+i).className="off";
+		i++;
+	 }
+	 //alert(div_+what);
+ if(what!=0) {
+  document.getElementById(div_+what).className="on";
+ }
+}
+function toggle_div(what) {
+ var state = document.getElementById(what).className;
+ if(state=='on') {
+  document.getElementById(what).className="off";
+ } else {
+  document.getElementById(what).className="on";
+ }
+}
+function user_profile_show_hide(what, text) {
+	var i=1;
+	while (document.getElementById('um'+i)) {
+		document.getElementById('u'+i).className="off";
+		document.getElementById('um'+i).className = "";
+		i++;
+	}
+	//alert(div_+what);
+ if(what!=0) {
+  document.getElementById('u'+what).className="on";
+	document.getElementById('up_title').innerHTML = text;
+	document.getElementById('um'+what).className = "active";
+	
+ }
+}
+function show_div(koi) {
+ obj = document.getElementById(koi);
+	obj.className = 'on';
+	}
+function hide_div(koi) {
+ obj = document.getElementById(koi);
+	obj.className = 'off';
+	}
+function menu_type_select(){
+ var obj = document.getElementById('modul_type_id');
+ var selected = obj.value;
+ sh_hide_div('md',selected);
+}
+function xGetElementById(e) {
+	if(typeof(e)!='string') return e;
+	if(document.getElementById) e=document.getElementById(e);
+	else if(document.all) e=document.all[e];
+	else e=null;
+	return e;
+} 
+function getNewCaptcha(n) {
+	var _img = xGetElementById('captcha'+n);
+	var _rnd = 12574*Math.random();
+	_img.src = "/Scripts/myCaptcha.php?id="+_rnd;
+}
+function ajaxFunction(what) {
+var xmlhttp;
+var add_str="";
+		add_str+='?menu_type_id='+document.getElementById('menu_type_id').value;
+	
+	if (window.XMLHttpRequest)	  {
+	  // code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }	else  {
+	  // code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	
+	var url="/admin/inc/ajax_menu.php"+add_str;
+	
+		xmlhttp.onreadystatechange=function()	{
+			if(xmlhttp.readyState==4)  {
+			  var div_text = "";
+			  var otgovor = xmlhttp.responseText;
+				div_text+='<option value="0|1">- Корена на сайта -</option>';
+				if(otgovor!="") {
+					masiv = otgovor.split('**');
+					for(i=0;i<masiv.length; i++) {
+						help = masiv[i].split('*');
+						level = parseInt(help[2])+1;
+					 div_text+='<option value="'+help[1]+'|'+level+'">'+help[0]+'</option>';
+					}
+				}
+					 document.getElementById("parent_id").innerHTML=div_text;
+			}
+			  // alert();
+		}
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+}
+// ============================= FORM VALIDATION EFECT ============================= //
+// START OF MESSAGE SCRIPT //
+var MSGTIMER = 20;
+var MSGSPEED = 5;
+var MSGOFFSET = 3;
+var MSGHIDE = 3;
+// build out the divs, set attributes and call the fade function //
+function inlineMsg(target,string,autohide) {
+  var msg;
+  var msgcontent;
+  if(!document.getElementById('msg')) {
+    msg = document.createElement('div');
+    msg.id = 'msg';
+    msgcontent = document.createElement('div');
+    msgcontent.id = 'msgcontent';
+    document.body.appendChild(msg);
+    msg.appendChild(msgcontent);
+    msg.style.filter = 'alpha(opacity=0)';
+    msg.style.opacity = 0;
+    msg.alpha = 0;
+  } else {
+    msg = document.getElementById('msg');
+    msgcontent = document.getElementById('msgcontent');
+  }
+  msgcontent.innerHTML = string;
+  msg.style.display = 'block';
+  var msgheight = msg.offsetHeight;
+  var targetdiv = document.getElementById(target);
+  targetdiv.focus();
+  var targetheight = targetdiv.offsetHeight;
+  var targetwidth = targetdiv.offsetWidth;
+  var topposition = topPosition(targetdiv) - ((msgheight - targetheight) / 2);
+  var leftposition = leftPosition(targetdiv) + targetwidth + MSGOFFSET;
+  msg.style.top = topposition + 'px';
+  msg.style.left = leftposition + 'px';
+  clearInterval(msg.timer);
+  msg.timer = setInterval("fadeMsg(1)", MSGTIMER);
+  if(!autohide) {
+    autohide = MSGHIDE;  
+  }
+  window.setTimeout("hideMsg()", (autohide * 1000));
+}
+// hide the form alert //
+function hideMsg(msg) {
+  var msg = document.getElementById('msg');
+  if(!msg.timer) {
+    msg.timer = setInterval("fadeMsg(0)", MSGTIMER);
+  }
+}
+// face the message box //
+function fadeMsg(flag) {
+  if(flag == null) {
+    flag = 1;
+  }
+  var msg = document.getElementById('msg');
+  var value;
+  if(flag == 1) {
+    value = msg.alpha + MSGSPEED;
+  } else {
+    value = msg.alpha - MSGSPEED;
+  }
+  msg.alpha = value;
+  msg.style.opacity = (value / 100);
+  msg.style.filter = 'alpha(opacity=' + value + ')';
+  if(value >= 99) {
+    clearInterval(msg.timer);
+    msg.timer = null;
+  } else if(value <= 1) {
+    msg.style.display = "none";
+    clearInterval(msg.timer);
+  }
+}
+// calculate the position of the element in relation to the left of the browser //
+function leftPosition(target) {
+  var left = 0;
+  if(target.offsetParent) {
+    while(1) {
+      left += target.offsetLeft;
+      if(!target.offsetParent) {
+        break;
+      }
+      target = target.offsetParent;
+    }
+  } else if(target.x) {
+    left += target.x;
+  }
+  return left;
+}
+// calculate the position of the element in relation to the top of the browser window //
+function topPosition(target) {
+  var top = 0;
+  if(target.offsetParent) {
+    while(1) {
+      top += target.offsetTop;
+      if(!target.offsetParent) {
+        break;
+      }
+      target = target.offsetParent;
+    }
+  } else if(target.y) {
+    top += target.y;
+  }
+  return top;
+}
+// preload the arrow //
+if(document.images) {
+  arrow = new Image(7,80); 
+  arrow.src = "/images/msg_arrow.gif"; 
+}
+// ============================= END FORM VALIDATION EFECT ============================= //
+
+function clear_search(text){
+ var obj = document.getElementById("search_string");
+ if(obj.value == text) {
+	 obj.value="";
+ }
+}
+function clear_form(field, text){
+ var obj = document.getElementById(field);
+ if(obj.value == text) {
+	 obj.value="";	 
+	 obj.className="input_select";	 
+	 	 
+ }
+}
+function fill_form(field, text){
+ var obj = document.getElementById(field);
+ if(obj.value == "") {
+	 obj.value=text;
+	 obj.className="input";	 
+ }
+}
+function search_p(text, lang){
+	var obj = document.getElementById("search_string");
+	if( (obj.value == text) || (obj.value == '') ) {
+		if(lang=='bg') {
+		 alert ("Въведете дума за търсене!");
+		} else {
+		 alert ("Type search phrase!");		
+		}
+	} else {
+		var string = document.getElementById('search_string').value;
+		document.search_form.action="/"+lang+"/search/"+string;
+	  document.search_form.submit();
+	}
+}
+// hide warning message 
+function fade() {
+	$( ".warning" ).hide('slow');
+}
+	
+	
+function GetXmlHttpObject()
+{
+if (window.XMLHttpRequest)
+  {
+  // code for IE7+, Firefox, Chrome, Opera, Safari
+  return new XMLHttpRequest();
+  }
+if (window.ActiveXObject)
+  {
+  // code for IE6, IE5
+  return new ActiveXObject("Microsoft.XMLHTTP");
+  }
+return null;
+}
+
+function clearForm() {
+	var category = document.getElementsByName('cat[]');
+	for (var i = 0; i < category.length; i++) {
+		category[i].checked = false;
+	}
+	var destination = document.getElementsByName('reg[]');
+	for (var i = 0; i < destination.length; i++) {
+		destination[i].checked = false;
+	}
+	document.getElementById('valid_from').value = "";
+	document.getElementById('valid_to').value = "";
+	document.getElementById('mode').value = "clear";
+	document.filtri.submit();
+}
+
+// for ratings pop-up
+function showit(h) {
+  var el = document.getElementById(h);
+  el.style.visibility = "visible";
+  el.visibility = "show";
+}
+function hideit(h) {
+  var el = document.getElementById(h);
+  el.style.visibility = "hidden";
+  el.visibility = "hide";
+}
+
+function active_menu(id, sub_id){
+	
+var xmlhttp=false;
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+	try {
+		xmlhttp = new XMLHttpRequest();
+	} catch (e) {
+		xmlhttp=false;
+	}
+}
+if (!xmlhttp && window.createRequest) {
+	try {
+		xmlhttp = window.createRequest();
+	} catch (e) {
+		xmlhttp=false;
+	}
+}
+	var url="/inc/active_menu.php";
+	url=url+"?active_menu="+id+"&sub_active_menu="+sub_id;
+	
+	xmlhttp.open("GET",url,false); 
+	xmlhttp.send(null);
+		
+}

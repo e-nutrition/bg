@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'futura-pt';
+	src: url('FuturaPT-Book.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'futura-pt';
+	src: url('FuturaPT-Heavy.otf');
+	font-weight: bold;
+	font-style: normal;
+}

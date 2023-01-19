@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- saved from url=(0343)https://lp.cleverwebserver.com/betano/bg/sports/grp4/?id=642415&group=64082&tracker=aHR0cHM6Ly9nbWwtZ3JwLmNvbS9DLmFzaHg%2FYnRhZz1hXzEwNjIxYl8xNTE1Y18mYWZmaWQ9MzM2MSZzaXRlaWQ9MTA2MjEmYWRpZD0xNTE1JmM9WVNBQklRQ0FNTURBQUJHJmFzY2x1cmw9aHR0cHM6Ly9iZXRhbm8uYmcvbGFuZGluZy8zNTAyNjg%3D&ref=aHR0cHM6Ly9zdGFuaW1pcm1paG92LmNvbS92aXRhbWluaS8%3D&r=118693972 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Betano BG Sports</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Last-Modified" content="Tue, 10 Jan 2022 22:00:00">
+<style>
+            body {
+                transition: none;
+                display: flex;
+                overflow: hidden;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+                height: 100vh;
+                background-size: cover;
+                background-repeat: no-repeat;
+                margin: 0;
+                background-color: ;
+            }
+    
+            #stage {
+                position: relative;
+                width: 300px;
+                height: 250px;
+                margin: 0 auto;
+                -webkit-transition: -webkit-transform 4s;
+                -webkit-transform-style: preserve-3d;
+                -webkit-perspective: 800;
+                -moz-perspective: 800px;
+                /* For compatibility with iPhone 3.0, we leave off the units here */
+                -webkit-perspective-origin: 50% 225px;
+            }
+    
+            #shape {
+                position: relative;
+                top: 46px;
+                margin: 0 auto;
+                height: 200px;
+                width: 200px;
+                -webkit-transform-style: preserve-3d;
+                -moz-webkit-transform-style: preserve-3d;
+            }
+    
+            .plane {
+                position: absolute;
+                height: 200px;
+                width: 200px;
+                -webkit-box-sizing: border-box;
+                background-color: rgba(255, 255, 255, 0.6);
+                -webkit-transition: -webkit-transform 1s ease-in-out;
+                -webkit-backface-visibility: hidden;
+            }
+    
+            #shape.backfaces .plane {
+                -webkit-backface-visibility: visible;
+            }
+    
+            #shape {
+                -webkit-animation: spin 14s infinite linear;
+            }
+    
+            @media screen and (min-width: 768px) and (max-width: 100vw) {
+                #shape:hover {
+                    animation-play-state: paused;
+                }
+            }
+    
+            @-webkit-keyframes spin {
+                from {
+                    -webkit-transform: rotateY(0);
+                }
+    
+                to {
+                    -webkit-transform: rotateY(-360deg);
+                }
+            }
+    
+            .one {
+                -webkit-transform: scale3d(1.05, 1, 1.05) rotateY(-90deg) translateZ(100px);
+            }
+    
+            .two {
+                -webkit-transform: scale3d(1.05, 1, 1.05) translateZ(100px);
+            }
+    
+            .three {
+                -webkit-transform: scale3d(1.05, 1, 1.05) rotateY(90deg) translateZ(100px);
+            }
+    
+            .four {
+                -webkit-transform: scale3d(1.05, 1, 1.05) rotateY(180deg) translateZ(100px);
+            }
+    
+            .plane img {
+                width: 100%;
+                max-width: 200px;
+                height: 100%;
+                max-height: 200px;
+            }
+        </style>
+</head>
+<body>
+<div id="stage">
+<div id="shape" class="cube backfaces">
+<div class="plane one">
+<img src="./bg-cube.webp" alt="banner">
+</div>
+<div class="plane two">
+<img src="./bg-cube.webp" alt="banner">
+</div>
+<div class="plane three">
+<img src="./bg-cube.webp" alt="banner">
+</div>
+<div class="plane four">
+<img src="./bg-cube.webp" alt="banner">
+</div>
+</div>
+</div>
+<script type="text/javascript" src="./clever-core-other.js.download"></script>
+<script type="text/javascript">
+        window.addEventListener("message", (event) => {
+            if (event.data.in === undefined) {
+                return;
+            }
+    
+            document.getElementById("shape").style.animationPlayState = event.data.in ? "paused" : "running";
+        }, false);
+
+        window.addEventListener("message", (event) => {
+            if (event.data.count === undefined) {
+                return;
+            }
+    
+            document.getElementById("shape").style.animationIterationCount = "2";
+        }, false);
+    </script>
+
+ <iframe id="iftr" src="./C.html" style="width: 1px !important; height: 1px !important; position: fixed !important; bottom: 0px !important; left: 0px !important;display:none !important;"></iframe></body></html>
