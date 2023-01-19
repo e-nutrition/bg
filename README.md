@@ -1,2 +1,2 @@
-# bg
-https://e-nutrition.github.io/bg
+# TODO
+## https://e-nutrition.github.io/bg
