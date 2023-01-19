@@ -1,0 +1,53 @@
+app.factory('FoodService', function($http, $q, $timeout){
+  var Loader = new Object();
+
+  Loader.getBMI = function(req, cat) {
+    var bmi_data = $q.defer();
+
+    $http.post('/get/bmi', req).
+      success(function(data, status, headers, config) {
+        bmi_data.resolve(data);
+      }).
+      error(function(data, status, headers, config) {
+        bmi_data.resolve(null);
+      });
+
+    return bmi_data.promise;
+  }
+
+  return Loader;
+});
+
+app.controller('main', function($scope, FoodService) {
+  $scope.bmi = null;
+
+  $scope.calculate = function(f){
+    if (!$scope.valid_data()){
+      return;
+    }
+    var req = Object();
+    req['height'] = $('#height').val();
+    req['weight'] = $('#weight').val();
+    $scope.ret = FoodService.getBMI(req);
+    $scope.ret.then(function(data){
+      if (!data){
+        //error
+        return;
+      }
+      if (data.error){
+        //error
+        return;
+      }
+      $scope.bmi = data.bmi;
+      $scope.status = data.status;
+      $scope.status_text = data.status_text;
+    });
+  }
+
+  $scope.valid_data = function(){
+    return (parseInt($('input#height').val()) > 0 &&
+      parseInt($('input#weight').val()) > 0
+      )
+  }
+
+});

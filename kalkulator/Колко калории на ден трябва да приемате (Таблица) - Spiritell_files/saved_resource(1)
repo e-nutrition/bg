@@ -1,0 +1,39 @@
+
+var ftGUID_5207684="5497336299DB8C";
+var ftConfID_5207684="0";
+var ftParams_5207684="ftx=&fty=&ftadz=&ftscw=&ft_custom=&ftOBA=1&ft_ifb=1&ft_domain=spiritell.com&ft_agentEnv=0&ft_referrer=https%3A%2F%2Fspiritell.com%2F&gdpr=&gdpr_consent=&us_privacy=${US_PRIVACY}&cachebuster=664254.4482753052";
+var ftKeyword_5207684="";
+var ftCustom_5207684="";
+var ftSection_5207684="";
+var ftSegment_5207684="";
+var ftSegmentList_5207684=[];
+var ftRuleMatch_5207684="0";
+var ftTimestamp_5207684="1674131455";
+var ftGeoC2_5207684="bg";
+var ftGeoState_5207684="22";
+var ftGeoCity_5207684="lozenets";
+var ftISP_5207684="vivacom bulgaria ead";
+var ftSpeed_5207684="broadband";
+var ftConnType_5207684="wifi";
+var ftDMA_5207684="-1";
+var ftLong_5207684="23.33";
+var ftLat_5207684="42.67";
+var ftPostal_5207684="1164";
+var ftTimeZone_5207684="200";
+var ftMobileCarrier_5207684="";
+var ftImp5207684 = {};
+ftImp5207684.privacy = "t";
+ftImp5207684.guidAge = "2";
+ftImp5207684.impID = "7B9B0BA8-1D40-266E-079B-6ECE45F9E6DB";
+ftImp5207684.duid = "FT:5497336299DB8C";
+
+ftImp5207684.ft_tpplid = "";
+ftImp5207684.ft_c = {};
+ftImp5207684.gdpr = "";
+ftImp5207684.gdpr_consent = "";
+ftImp5207684.gdpr_pd = "";
+ftImp5207684.oob_consent = "";
+ftImp5207684.gdprStoredConsent = "";
+ftImp5207684.us_privacy = "!!US_PRIVACY!";
+
+document.write('<scr'+'ipt src="https://cdn.flashtalking.com/xre/520/5207684/4063673/js/j-5207684-4063673.js" id="ftscript_m5207684" name="ftscript_m5207684"></scr'+'ipt>');

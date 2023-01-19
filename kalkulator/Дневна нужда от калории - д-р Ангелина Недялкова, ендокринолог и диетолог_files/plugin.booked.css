@@ -1,0 +1,16 @@
+/* Booked Appointments
+------------------------------------------------------------------------------------ */
+body table.booked-calendar th .monthName a {
+	color: rgba(255,255,255,0.75);
+}
+body table.booked-calendar th .monthName a:hover {
+	color: #ffffff;
+}
+
+body div.booked-calendar-wrap div.booked-calendar .bc-body .bc-row.week .bc-col.today .date span{
+	box-shadow: inset 0 0 0 2px #f32769;
+}
+
+body div.booked-calendar-wrap div.booked-calendar .bc-body .bc-row.week .bc-col.today:hover .date span{
+	background: #f32769 !important;
+}

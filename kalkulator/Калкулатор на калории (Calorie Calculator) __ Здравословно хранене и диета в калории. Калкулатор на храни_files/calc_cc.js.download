@@ -1,0 +1,216 @@
+app.factory('FoodService', function($http, $q, $timeout){
+  var Loader = new Object();
+  var cache = new Object();
+
+  Loader.getFoods = function(req, cat) {
+    var food_data = $q.defer();
+    var key = req + "::" + cat;
+    if (key in cache)
+    {
+      food_data.resolve(cache[key]);
+    } else {
+      if (req && req.length >= 2){
+        $http.post('/get/food', {food: req, cat: cat}).
+          success(function(data, status, headers, config) {
+            cache[key] = data.foods;
+            food_data.resolve(data.foods);
+          }).
+          error(function(data, status, headers, config) {
+            food_data.resolve([]);
+          });
+      } else {
+        food_data.resolve([]);
+      }
+    }
+
+    return food_data.promise;
+  }
+
+  Loader.addFoods = function(req) {
+    var ret_data = $q.defer();
+    $http.post('/add/food', req).
+      success(function(data, status, headers, config) {
+        ret_data.resolve({'msg': data.msg, 'label': 'success'});
+      }).
+      error(function(data, status, headers, config) {
+        ret_data.resolve({'msg': 'Грешка при изпращане', 'label': 'danger'});
+      });
+    return ret_data.promise;
+  }
+
+  Loader.getCals = function(req) {
+    var cal_data = $q.defer();
+    $http.post('/get/cal', req).
+      success(function(data, status, headers, config) {
+        cal_data.resolve(data);
+      }).
+      error(function(data, status, headers, config) {
+        cal_data.resolve(Object());
+      });
+
+    return cal_data.promise;
+  }
+
+  Loader.getNeeded = function(req) {
+    var cal_data = $q.defer();
+    $http.post('/get/needed', req).
+      success(function(data, status, headers, config) {
+        cal_data.resolve(data);
+      }).
+      error(function(data, status, headers, config) {
+        cal_data.resolve(Object());
+      });
+
+    return cal_data.promise;
+  }
+
+  return Loader;
+});
+
+app.controller('main', function($scope, FoodService, $timeout) {
+  $scope.foods = [];
+  $scope.selected = [];
+  $scope.search_str = '';
+  $scope.step2 = null;
+  $scope.diff = 0;
+
+  $scope.search = function(){
+    var str = $scope.term;
+    $scope.search_str = str;
+    $scope.foods = FoodService.getFoods(str, $('select#category').val());
+    $scope.foods.then(function(data){
+      $scope.foods = data;
+    });
+  }
+
+  $scope.addFood = function(f){
+    if (!$scope.selected.inArray(f))
+      $scope.selected.push(f);
+  }
+
+  $scope.isSelected = function(f){
+    return $scope.selected.inArray(f);
+  }
+
+  $scope.removeFood = function(f){
+    $scope.selected.removeValue(f);
+  }
+
+  $scope.send = function(f){
+    var req = Object();
+    req.name = $scope.food_name;
+    req.kcal = $scope.food_kcal;
+    req.proteins = $scope.food_proteins;
+    req.fats = $scope.food_fats;
+    req.carbs = $scope.food_carbs;
+
+    var ret = FoodService.addFoods(req);
+    ret.then(function(data){
+      $scope.msg = data.msg;
+      $scope.lbl = data.label;
+      if (data.label === 'success'){
+        $scope.food_name = '';
+        $scope.food_kcal = '';
+        $scope.food_proteins = '';
+        $scope.food_fats = '';
+        $scope.food_carbs = '';
+      }
+      var r = $timeout(function(){}, 2000);
+      r.then(function(data){
+        $scope.msg = '';
+      });
+    });
+  }
+
+  $scope.calculate = function(f){
+    if ($scope.sum_weights() == 0){
+      return;
+    }
+    var req = Object();
+    for (var s=0; s<$scope.selected.length;++s){
+      var name = $scope.selected[s];
+      req[name] = $("input[data-name*='" + name.replace("'", "\\'") + "']").val();
+    }
+
+    $scope.step2 = FoodService.getCals(req);
+    $scope.step2.then(function(data){
+      drawStep2(data.proteins, data.fats, data.carbs);
+      $scope.kcal = data.kcal;
+      $scope.calculate2();
+    });
+  }
+
+  $scope.calculate2 = function(f){
+    if (!$scope.valid_data()){
+      return;
+    }
+    var req = Object();
+    req['age'] = $('#age').val();
+    req['height'] = $('#height').val();
+    req['weight'] = $('#weight').val();
+    req['gender'] = $('#gender').val();
+    req['activity'] = $('#activity').val();
+    $scope.step3 = FoodService.getNeeded(req);
+    $scope.step3.then(function(data){
+      $scope.diff = $scope.kcal - data.needed;
+      drawStep3($scope.kcal, data.needed);
+      $scope.calculate3();
+    });
+  }
+
+  $scope.calculate3 = function(f){
+    if ($('select#sport').val() == '' || $scope.diff){
+      $('#hours').val('');
+    }
+    var sport = $('select#sport').val();
+    if (sport === '')
+      return;
+    sport = parseInt(sport);
+    var total = $scope.diff / sport;
+    var hours = Math.floor(total);
+    var minutes = Math.floor((($scope.diff - (hours * sport)) / sport) * 60);
+
+    var h_str = '';
+    var m_str = '';
+    if (hours == 0){
+      h_str = '';
+    } else if (hours == 1){
+      h_str = hours + ' час,  ';
+    } else {
+      h_str = hours + ' часа, ';
+    }
+    if (minutes == 0){
+      m_str = '';
+    } else if (minutes == 1){
+      m_str = minutes + ' минута';
+    } else {
+      m_str = minutes + ' минути';
+    }
+    $('#hours').val(h_str + m_str);
+  }
+
+  $scope.sum_weights = function(){
+    var total = 0;
+    $('input.weights').each(function(){
+      total += parseInt($(this).val())
+    });
+    return total;
+  }
+
+  $scope.valid_data = function(){
+    return (parseInt($('input#height').val()) > 0 &&
+      parseInt($('input#weight').val()) > 0 &&
+      parseInt($('input#age').val()) > 0
+      )
+  }
+
+  $scope.valid_food_data = function(){
+    return ($scope.food_name &&
+      parseInt($scope.food_kcal) >= 0 &&
+      parseInt($scope.food_proteins) >= 0 &&
+      parseInt($scope.food_fats) >= 0 &&
+      parseInt($scope.food_carbs) >= 0
+      )
+  }
+
+});
