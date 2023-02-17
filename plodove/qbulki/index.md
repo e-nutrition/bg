@@ -1,4 +1,4 @@
-![apple](apple.png  | height=150)
+<img src="apple.png" alt="apple" style="height:150px;"/>
 
 # Ябълка
 
