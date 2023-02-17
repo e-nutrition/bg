@@ -1,4 +1,4 @@
-![apple](apple.png)
+![apple](apple.png  | height=150)
 
 # Ябълка
 
